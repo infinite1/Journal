@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1070798484636",
+    "firebase_url": "https://dairy-ad643.firebaseio.com",
+    "project_id": "dairy-ad643",
+    "storage_bucket": "dairy-ad643.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070798484636:android:132260be03dea001baa959",
+        "android_client_info": {
+          "package_name": "com.example.journal3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070798484636-784k949f2ljh1gtao4eqs3f68no2rl3s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.journal3",
+            "certificate_hash": "97336cecfedc65e04b002faf6df5f70bfb130548"
+          }
+        },
+        {
+          "client_id": "1070798484636-ging54g2secpci1rfc9d4tivpkmjmktn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVyoGgPQoeyO1n-kKIWFAF9KXOzNNBeLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070798484636-ging54g2secpci1rfc9d4tivpkmjmktn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

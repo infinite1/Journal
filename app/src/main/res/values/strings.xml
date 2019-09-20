@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">journal3</string>
+    <string name="time_line">Timeline</string>
+    <string name="home">Timeline home</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="login">Log In</string>
+    <string name="no_account_yet_create_one">No account yet? Create one</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_a_member_login">Already a member? Login</string>
+    <string name="create_password">Password must be at least 6 characters</string>
+    <string name="loading">Loading</string>
+    <string name="nav_head_sign_in_sign_up">Sign In/Sign Up</string>
+</resources>
