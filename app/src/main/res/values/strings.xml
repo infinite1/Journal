@@ -14,4 +14,6 @@
     <string name="create_password">Password must be at least 6 characters</string>
     <string name="loading">Loading</string>
     <string name="nav_head_sign_in_sign_up">Sign In/Sign Up</string>
+    <string name="back">Back</string>
+    <string name="mash">Mash</string>
 </resources>
