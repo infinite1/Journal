@@ -30,6 +30,7 @@ public class LogInActivity extends AppCompatActivity {
     private Button signUpButton;
     private FirebaseUser user;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
