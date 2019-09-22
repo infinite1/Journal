@@ -2,23 +2,30 @@ package com.example.journal3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        BottomNavigationView.OnNavigationItemSelectedListener {
     private Toolbar myToolbar;
     private Button mSignIn;
+    private BottomNavigationView mBtmView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
         myToolbar = findViewById(R.id.my_toolbar);
+        mBtmView = findViewById(R.id.bot_nav);
+        mBtmView.setOnNavigationItemSelectedListener(this);
 
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -34,6 +41,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mesh: {
+            }
+            break;
+            case R.id.calendar: {
+                startActivity(new Intent(MainActivity.this,
+                        CalendarActivity.class));
+            }
+            break;
+        }
+        return true;
     }
 }
