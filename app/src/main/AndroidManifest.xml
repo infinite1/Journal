@@ -12,6 +12,8 @@
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".LogInActivity" />
         <activity android:name=".TimelineActivity" />
+        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".VideoPlay"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
