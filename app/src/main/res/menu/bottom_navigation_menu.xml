@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/mesh"
         android:enabled="true"
         android:icon="@drawable/ic_movie_black_24dp"
         android:title="Mesh" />
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/calendar"
         android:enabled="true"
         android:icon="@drawable/ic_date_range_black_24dp"
         android:title="Calendar" />

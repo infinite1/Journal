@@ -42,8 +42,14 @@ public class CalendarActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(context,"No Video Record for That Day",Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
+
+
+
+
     }
 
     public void openVideoPlay() {
