@@ -42,7 +42,7 @@ public class VideoPlay extends AppCompatActivity {
 //        durationTimer = (TextView) findViewById(R.id.durationTimer);
 //        bufferProgress = (ProgressBar)findViewById(R.id.bufferProgress);
 
-        videoUri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-videodemo-ae7b7.appspot.com/o/sample_video.MP4?alt=media&token=fd29824f-8302-4f14-9978-35bd3754a8a9");
+        videoUri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/fir-videodemo-ae7b7.appspot.com/o/Video%20File%20Formats%20-%20MP4%2C%20MOV%2C%20MKV.mp4?alt=media&token=d369d35b-028e-4c56-bd7a-8df833779310");
         mainVideoView.setVideoURI(videoUri);
 //        mainVideoView.requestFocus();
         mainVideoView.start();
