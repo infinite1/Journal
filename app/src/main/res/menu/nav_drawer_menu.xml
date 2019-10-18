@@ -2,7 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/primary">
         <item
-            android:title="item1" />
+            android:id="@+id/signOut"
+            android:title="@string/sign_out"
+            android:enabled="true"/>
         <item
             android:title="item2" />
     </group>

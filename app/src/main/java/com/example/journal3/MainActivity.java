@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements
     private Toolbar myToolbar;
     private Button mSignIn;
     private BottomNavigationView mBtmView;
-   //add
+    //add
     private Uri videouri;
     private static final int REQUEST_CODE = 101;
     private ProgressDialog progressDialog;
@@ -47,39 +50,73 @@ public class MainActivity extends AppCompatActivity implements
     private SimpleDateFormat simpleDateFormat;
     private Date date;
     private long timeStamp;
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private TextView emailView;
 
     public static final int MAX_SIZE = 100;
 
     private List<String> recordList = new ArrayList<String>(MAX_SIZE);
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
+        mAuth = FirebaseAuth.getInstance();
         myToolbar = findViewById(R.id.my_toolbar);
         mBtmView = findViewById(R.id.bot_nav);
         mBtmView.setOnNavigationItemSelectedListener(this);
-
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bot_nav);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerview = navigationView.getHeaderView(0);
+
+
+        // signIn button if user not exist, show email address if user exists
         mSignIn = headerview.findViewById(R.id.nav_sign_in_btn);
-        mSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, LogInActivity.class);
-                startActivity(i);
-            }
-        });
+        emailView = headerview.findViewById(R.id.emailView);
+
+        currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            mSignIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(MainActivity.this, LogInActivity.class);
+                    startActivity(i);
+                }
+            });
+        } else {
+            mSignIn.setVisibility(View.GONE);
+            emailView.setVisibility(View.VISIBLE);
+            String email = currentUser.getEmail();
+            emailView.setText(email);
+        }
+
+        // Add select item listener for navigationView
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.signOut: {
+                                System.out.println("select signout");
+                                mSignIn.setVisibility(View.VISIBLE);
+                                emailView.setVisibility(View.GONE);
+                                mAuth.signOut();
+                                System.out.println("Sign out complete");
+                            }
+                            break;
+                        }
+                        return true;
+                    }
+                });
+
+
         //add
-
-
-
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -89,19 +126,19 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    // Add select item listener for bottomNavigation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mesh: {
+                System.out.println("select mesh");
             }
             break;
             case R.id.calendar: {
-//                startActivity(new Intent(MainActivity.this,
-//                        CalendarActivity.class));
+                System.out.println("select calendar");
                 Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-                intent.putExtra("recordlist",(Serializable) recordList);
+                intent.putExtra("recordlist", (Serializable) recordList);
                 startActivity(intent);
-
             }
             break;
         }
@@ -113,13 +150,13 @@ public class MainActivity extends AppCompatActivity implements
     public void upload(View view) {
 
         long timeStamp = System.currentTimeMillis();
-        System.out.println("Time is : "+timeStamp);
+        System.out.println("Time is : " + timeStamp);
 
         simpleDateFormat = new SimpleDateFormat("MM,dd,yyyy");
         date = new Date(timeStamp);
         strDate = simpleDateFormat.format(date);
-        System.out.println("Date is : "+strDate);
-        videoref =storageRef.child("/videos" + "/"+strDate);
+        System.out.println("Date is : " + strDate);
+        videoref = storageRef.child("/videos" + "/" + strDate);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -153,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 //                            updateProgress(taskSnapshot);
 
-                            int currentProgress = (int)(100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                            int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             progressDialog.setProgress(currentProgress);
 
                         }
@@ -164,10 +201,11 @@ public class MainActivity extends AppCompatActivity implements
         }
 
     }
+
     public void record(View view) {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
-        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,3);
+        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 3);
 
 
         startActivityForResult(intent, REQUEST_CODE);
@@ -177,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         videouri = data.getData();
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
