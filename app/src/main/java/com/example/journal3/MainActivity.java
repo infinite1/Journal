@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -32,7 +35,10 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener {
@@ -53,8 +59,10 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private TextView emailView;
+    private FirebaseFirestore db;
 
     public static final int MAX_SIZE = 100;
+    private static final String TAG = "Upload Video";
 
     private List<String> recordList = new ArrayList<String>(MAX_SIZE);
 
@@ -70,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bot_nav);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerview = navigationView.getHeaderView(0);
 
@@ -80,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements
         emailView = headerview.findViewById(R.id.emailView);
 
         currentUser = mAuth.getCurrentUser();
-
         if (currentUser == null) {
             mSignIn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements
             emailView.setText(email);
         }
 
-        // Add select item listener for navigationView
+        // Add select item listener for navigation drawer
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -108,6 +114,11 @@ public class MainActivity extends AppCompatActivity implements
                                 emailView.setVisibility(View.GONE);
                                 mAuth.signOut();
                                 System.out.println("Sign out complete");
+                                Intent i = new Intent(MainActivity.this,
+                                        MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                                MainActivity.this.finish();
                             }
                             break;
                         }
@@ -125,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements
 //        videoref =mStorageRef.child("/videos" + "/userIntro.3gp");
 
     }
+
 
     // Add select item listener for bottomNavigation
     @Override
@@ -152,7 +164,9 @@ public class MainActivity extends AppCompatActivity implements
         long timeStamp = System.currentTimeMillis();
         System.out.println("Time is : " + timeStamp);
 
-        simpleDateFormat = new SimpleDateFormat("MM,dd,yyyy");
+        // initialize Firestore
+        db = FirebaseFirestore.getInstance();
+        simpleDateFormat = new SimpleDateFormat("MM_dd_yyyy");
         date = new Date(timeStamp);
         strDate = simpleDateFormat.format(date);
         System.out.println("Date is : " + strDate);
@@ -164,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements
         progressDialog.setProgress(0);
         progressDialog.show();
         if (videouri != null) {
+
+
+
             UploadTask uploadTask = videoref.putFile(videouri);
 
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -192,14 +209,40 @@ public class MainActivity extends AppCompatActivity implements
 
                             int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             progressDialog.setProgress(currentProgress);
-
                         }
                     });
+            uploadRefToDatabase(videoref, currentUser, strDate);
         } else {
             Toast.makeText(MainActivity.this, "Nothing to upload",
                     Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    // upload video reference to firebase
+    public void uploadRefToDatabase(StorageReference videoref, FirebaseUser currentUser,
+                                    String strDate) {
+        if (currentUser != null) {
+            // upload videos to cloud
+            Map<String, Object> user = new HashMap<>();
+            user.put(strDate, videoref.toString());
+
+            // Add a new document with user email as id
+            db.collection("users").document(Objects.requireNonNull(currentUser.getEmail()))
+                    .set(user, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+        }
     }
 
     public void record(View view) {
