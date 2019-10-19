@@ -39,6 +39,7 @@
             android:textColor="@color/white" />
 
         <Button
+            android:id="@+id/share_to_other_app"
             android:layout_width="147dp"
             android:layout_height="64dp"
             android:layout_gravity="center"

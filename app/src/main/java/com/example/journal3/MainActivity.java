@@ -3,6 +3,7 @@ package com.example.journal3;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "ALL Permissions granted", Toast.LENGTH_LONG).show();
         }
-
 
 
         setContentView(R.layout.demo_window);

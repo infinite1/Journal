@@ -2,7 +2,9 @@ package com.example.journal3;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -39,10 +41,11 @@ public class SaveShare extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.share_save);
 
-        Uri videoUri = Uri.parse(getIntent().getExtras().getString("videoUri"));
+
+
+        final Uri videoUri = Uri.parse(getIntent().getExtras().getString("videoUri"));
         Uri videoUri2 = Uri.parse(getIntent().getExtras().getString("videoUri2"));
         String content1 = getIntent().getExtras().getString("videoUri");
         String content2 = getIntent().getExtras().getString("videoUri2");
@@ -113,15 +116,35 @@ public class SaveShare extends AppCompatActivity {
         }
 
         Log.v("TEST","video aleady producted");
-        File mergefile = new File("/storage/emulated/0/DCIM/Camera/out1.mp4");//打开软件直接播放的视频名字是movie.mp4
+        final File mergefile = new File("/storage/emulated/0/DCIM/Camera/out1.mp4");//打开软件直接播放的视频名字是movie.mp4
         mVideoView = findViewById(R.id.merge_video);
         Log.v("test", mergefile.getPath());
         mVideoView.setVideoPath(mergefile.getPath());
         mVideoView.seekTo(0);
         mVideoView.requestFocus();
         mVideoView.start();
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+                mp.setLooping(true);
 
+            }
+        });
+
+        Button btnshare_to_other_app;
+        btnshare_to_other_app=findViewById(R.id.share_to_other_app);
+        btnshare_to_other_app.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);            //分享视频只能单个分享
+                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(mergefile.getPath()));
+                shareIntent.setType("video/mp4");
+                startActivity(Intent.createChooser(shareIntent, "Share to"));
+            }
+        });
 
     }
 
