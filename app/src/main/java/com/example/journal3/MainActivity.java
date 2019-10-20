@@ -194,6 +194,8 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.mesh: {
                 System.out.println("select mesh");
+                Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+                startActivity(intent);
             }
             break;
             case R.id.calendar: {

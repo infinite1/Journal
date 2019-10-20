@@ -21,6 +21,8 @@
         <activity android:name=".TimelineActivity" />
         <activity android:name=".CalendarActivity"></activity>
         <activity android:name=".videoPlayNew"></activity>
+        <activity android:name=".VideoActivity"></activity>
+        <activity android:name=".SaveShare"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

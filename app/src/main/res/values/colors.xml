@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#007ac1</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorLight">#d05ce3</color>
+    <color name="white">#FCF9F9</color>
+    <color name="black">#56020202</color>
+    <color name="smallwindow_blue">#56020202</color>
+    <color name="smallwindow_purple">#BA835AD6</color>
+    <color name="smallwindow_grey">#BAA09BB3</color>
 </resources>
