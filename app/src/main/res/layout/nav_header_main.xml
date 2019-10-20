@@ -32,6 +32,23 @@
         android:textColor="#ffffff"
         style="?android:attr/borderlessButtonStyle"
         android:textAllCaps="false"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/emailView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="19dp"
+        android:background="@null"
+        android:padding="0dp"
+        android:text="@string/email_address"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:visibility="gone"/>
+
 
 </LinearLayout>
