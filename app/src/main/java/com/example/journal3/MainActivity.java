@@ -358,6 +358,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         videouri = data.getData();
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
