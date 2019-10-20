@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,6 +75,18 @@ public class CalendarActivity extends AppCompatActivity {
                 }
                 else {
                     fileRef = storageRef.child("videos/"+date);
+                    fileRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                        @Override
+                        public void onSuccess(StorageMetadata storageMetadata) {
+                            System.out.println("Location of video: "+storageMetadata.getCustomMetadata("Location"));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+
+                        }
+                    });
+
 
                     File localFile = null;
                     try {
