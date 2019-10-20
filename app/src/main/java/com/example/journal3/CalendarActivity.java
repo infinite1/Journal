@@ -81,7 +81,8 @@ public class CalendarActivity extends AppCompatActivity {
                 String dayOfMonth = String.format("%02d",i2);
 //                System.out.println("NEW IS "+dayOfMonth);
                 String date = (i1 + 1) + "_" +dayOfMonth + "_" + i;  //String date = (i1 + 1) + "/" +i2 + "/" + i;
-                myDate.setText(date);
+                String view_date = (i1 + 1) + "," +dayOfMonth + "," + i;
+                myDate.setText(view_date);
                 Context context = getApplicationContext();
                 System.out.println("***************date is "+date+" *******************");
                 if(acceptList.indexOf(date)==-1) {                //cannot find record from recordlist

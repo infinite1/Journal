@@ -290,27 +290,27 @@ public class MainActivity extends AppCompatActivity implements
                     Toast.LENGTH_LONG).show();
         }
 
-        /******************************add metadata*************************/
-        StorageMetadata metadata = new StorageMetadata.Builder()
-                .setContentType("video/mp4")
-                .setCustomMetadata("Location", "Carlton")
-                .build();
-        // Update metadata properties
-        videoref.updateMetadata(metadata)
-                .addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-                    @Override
-                    public void onSuccess(StorageMetadata storageMetadata) {
-                        System.out.println("Add location successfully!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Uh-oh, an error occurred!
-                        System.out.println("Add location Failed: "+exception.toString());
-
-                    }
-                });
+//        /******************************add metadata*************************/
+//        StorageMetadata metadata = new StorageMetadata.Builder()
+//                .setContentType("video/mp4")
+//                .setCustomMetadata("Location", "Carlton")
+//                .build();
+//        // Update metadata properties
+//        videoref.updateMetadata(metadata)
+//                .addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+//                    @Override
+//                    public void onSuccess(StorageMetadata storageMetadata) {
+//                        System.out.println("Add location successfully!");
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception exception) {
+//                        // Uh-oh, an error occurred!
+//                        System.out.println("Add location Failed: "+exception.toString());
+//
+//                    }
+//                });
 
 
 
