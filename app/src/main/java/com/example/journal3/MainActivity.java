@@ -223,12 +223,7 @@ public class MainActivity extends AppCompatActivity implements
             date = new Date(timeStamp);
             strDate = simpleDateFormat.format(date);
             System.out.println("Date is : " + strDate);
-            videoref = storageRef.child("/videos" + "/" + strDate);
-        simpleDateFormat = new SimpleDateFormat("MM,dd,yyyy");
-        date = new Date(timeStamp);
-        strDate = simpleDateFormat.format(date);
-        System.out.println("Date is : "+strDate);
-        videoref =storageRef.child("videos/"+strDate);
+            videoref = storageRef.child("/videos" + "/" + strDate);;
 
 
 
@@ -292,16 +287,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         } else {
             Toast.makeText(MainActivity.this, "User doesn't sign in",
-                            int currentProgress = (int)(100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                            progressDialog.setProgress(currentProgress);
-
-                        }
-                    });
-
-
-
-        } else {
-            Toast.makeText(MainActivity.this, "Nothing to upload",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -326,7 +311,6 @@ public class MainActivity extends AppCompatActivity implements
 
                     }
                 });
-
 
 
 
