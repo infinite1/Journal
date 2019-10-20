@@ -41,8 +41,6 @@ public class CalendarActivity extends AppCompatActivity {
     private static final String TAG = "calendarActivity";
     private List<String> acceptList;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

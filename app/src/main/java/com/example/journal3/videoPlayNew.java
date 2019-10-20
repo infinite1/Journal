@@ -6,14 +6,26 @@ import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+
 
 public class videoPlayNew extends AppCompatActivity{
     //    private StorageReference mStorageRef;
 
     private VideoView mainVideoView;
     private Uri videoUri;
+
+    //add
+    private static final int REQUEST_CODE  = 1000;
+    TextView txt_location;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+    LocationRequest locationRequest;
+    LocationCallback locationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +50,7 @@ public class videoPlayNew extends AppCompatActivity{
     }
 
 
+
 }
+
 
