@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mesh: {
+
             }
             break;
             case R.id.calendar: {

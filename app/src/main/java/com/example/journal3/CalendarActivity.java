@@ -47,9 +47,6 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     public void openVideoPlay() {

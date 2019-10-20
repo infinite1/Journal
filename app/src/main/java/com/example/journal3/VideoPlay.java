@@ -46,29 +46,6 @@ public class VideoPlay extends AppCompatActivity {
         mainVideoView.setVideoURI(videoUri);
 //        mainVideoView.requestFocus();
         mainVideoView.start();
-
-
-//        isPlaying = true;
-//
-//        playBtn.setImageResource(R.mipmap.pauseicon);
-//        playBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(isPlaying) {
-//                    mainVideoView.pause();
-//                    isPlaying = false;
-//                    playBtn.setImageResource(R.mipmap.playicon);
-//
-//                }
-//                else {
-//                    mainVideoView.start();
-//                    isPlaying = true;
-//                    playBtn.setImageResource(R.mipmap.pauseicon);
-//                }
-//            }
-//        });
-
-//        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 }
 
