@@ -165,77 +165,84 @@ public class MainActivity extends AppCompatActivity implements
 
     public void upload(View view) {
 
-        long timeStamp = System.currentTimeMillis();
-        System.out.println("Time is : " + timeStamp);
+        // Can only upload when the user sign in
+        if (currentUser != null) {
+            long timeStamp = System.currentTimeMillis();
+            System.out.println("Time is : " + timeStamp);
 
-        // initialize Firestore
-        db = FirebaseFirestore.getInstance();
-        simpleDateFormat = new SimpleDateFormat("MM_dd_yyyy");
-        date = new Date(timeStamp);
-        strDate = simpleDateFormat.format(date);
-        System.out.println("Date is : " + strDate);
-        videoref = storageRef.child("/videos" + "/" + strDate);
+            // initialize Firestore
+            db = FirebaseFirestore.getInstance();
+            simpleDateFormat = new SimpleDateFormat("MM_dd_yyyy");
+            date = new Date(timeStamp);
+            strDate = simpleDateFormat.format(date);
+            System.out.println("Date is : " + strDate);
+            videoref = storageRef.child("/videos" + "/" + strDate);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle("Uploading file..");
-        progressDialog.setProgress(0);
-        progressDialog.show();
-        if (videouri != null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setTitle("Uploading file..");
+            progressDialog.setProgress(0);
+            progressDialog.show();
+            if (videouri != null) {
 
 
-            UploadTask uploadTask = videoref.putFile(videouri);
+                UploadTask uploadTask = videoref.putFile(videouri);
 
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(MainActivity.this,
-                            "Upload failed: " + e.getLocalizedMessage(),
-                            Toast.LENGTH_LONG).show();
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this,
+                                "Upload failed: " + e.getLocalizedMessage(),
+                                Toast.LENGTH_LONG).show();
 
-                }
-            }).addOnSuccessListener(
-                    new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(MainActivity.this, "Upload complete",
-                                    Toast.LENGTH_LONG).show();
-                            progressDialog.dismiss();
-                            recordList.add(strDate);
+                    }
+                }).addOnSuccessListener(
+                        new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(MainActivity.this, "Upload complete",
+                                        Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
+                                recordList.add(strDate);
 //                            System.out.println("list size is "+list.size());
-                        }
-                    }).addOnProgressListener(
-                    new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            }
+                        }).addOnProgressListener(
+                        new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 //                            updateProgress(taskSnapshot);
 
-                            int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                            progressDialog.setProgress(currentProgress);
+                                int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                progressDialog.setProgress(currentProgress);
+                            }
+                        }).addOnCompleteListener(
+                        new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                videoref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        downloadUri = uri;
+                                        uploadRefToDatabase(currentUser, strDate);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        System.out.println("Fail to upload uri");
+                                    }
+                                });
+                            }
                         }
-                    }).addOnCompleteListener(
-                    new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            videoref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    downloadUri = uri;
-                                    uploadRefToDatabase(currentUser, strDate);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    System.out.println("Fail to upload uri");
-                                }
-                            });
-                        }
-                    }
-            );
+                );
+            } else {
+                Toast.makeText(MainActivity.this, "Nothing to upload",
+                        Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(MainActivity.this, "Nothing to upload",
+            Toast.makeText(MainActivity.this, "User doesn't sign in",
                     Toast.LENGTH_LONG).show();
         }
+
 
     }
 
