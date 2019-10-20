@@ -55,23 +55,6 @@ public class CalendarActivity extends AppCompatActivity {
 
 
         storageRef = FirebaseStorage.getInstance().getReference();
-//        fileRef = storageRef.child("videos/10,07,2019");
-//
-//        fileRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-//            @Override
-//            public void onSuccess(StorageMetadata storageMetadata) {
-//                System.out.println("The size of the file is: "+storageMetadata.getSizeBytes()); //getName()
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                System.out.println("Get metadata fail!!!!"+e.getLocalizedMessage());
-//            }
-//        });
-
-//        mFirebaseDatabase = FirebaseDatabase.getInstance();
-//        databaseReference =    mFirebaseDatabase.getReference().child("videos");
-
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -142,47 +125,6 @@ public class CalendarActivity extends AppCompatActivity {
 
 
                 }
-
-//                databaseReference.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                        for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-//                            Log.v(TAG,""+ childDataSnapshot.getKey()); //displays the key for the node
-////                    Log.v(TAG,""+ childDataSnapshot.child(--ENTER THE KEY NAME eg. firstname or email etc.--).getValue());   //gives the value for given keyname
-//                        }
-//                    }
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-//                if(date.compareTo("9,22,2019")==0) {
-//                    Toast.makeText(context,"Video Loading",Toast.LENGTH_SHORT).show();
-//
-//                    openVideoPlay();
-//
-//                }
-//                else {
-//                    Toast.makeText(context,"No Video Record for That Day",Toast.LENGTH_SHORT).show();
-//                }
-
-//                fileRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-//                    @Override
-//                    public void onSuccess(StorageMetadata storageMetadata) {
-//                        String filename = storageMetadata.getName();
-//
-//                        System.out.println("filename is "+ filename);
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception exception) {
-//                        // Uh-oh, an error occurred!
-//                    }
-//                });
-
-
 
             }
         });
