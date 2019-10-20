@@ -1,7 +1,9 @@
 package com.example.journal3;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements
     private SimpleDateFormat simpleDateFormat;
     private Date date;
     private long timeStamp;
+    private static final int PERMISSION_CODE=22;
 
 
     public static final int MAX_SIZE = 100;
@@ -59,6 +65,41 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
+
+        List<String> permissionList = new ArrayList<>();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.CAMERA);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.RECORD_AUDIO);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.INTERNET);
+        }
+
+
+        if (!permissionList.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    permissionList.toArray(new String[permissionList.size()]), PERMISSION_CODE);
+        } else {
+            Toast.makeText(this, "ALL Permissions granted", Toast.LENGTH_LONG).show();
+        }
         myToolbar = findViewById(R.id.my_toolbar);
         mBtmView = findViewById(R.id.bot_nav);
         mBtmView.setOnNavigationItemSelectedListener(this);
@@ -119,7 +160,9 @@ public class MainActivity extends AppCompatActivity implements
         date = new Date(timeStamp);
         strDate = simpleDateFormat.format(date);
         System.out.println("Date is : "+strDate);
-        videoref =storageRef.child("/videos" + "/"+strDate);
+        videoref =storageRef.child("videos/"+strDate);
+
+
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -158,10 +201,37 @@ public class MainActivity extends AppCompatActivity implements
 
                         }
                     });
+
+
+
         } else {
             Toast.makeText(MainActivity.this, "Nothing to upload",
                     Toast.LENGTH_LONG).show();
         }
+
+        /******************************add metadata*************************/
+        StorageMetadata metadata = new StorageMetadata.Builder()
+                .setContentType("video/mp4")
+                .setCustomMetadata("Location", "Carlton")
+                .build();
+        // Update metadata properties
+        videoref.updateMetadata(metadata)
+                .addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                    @Override
+                    public void onSuccess(StorageMetadata storageMetadata) {
+                        System.out.println("Add location successfully!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Uh-oh, an error occurred!
+                        System.out.println("Add location Failed: "+exception.toString());
+
+                    }
+                });
+
+
 
     }
     public void record(View view) {

@@ -18,10 +18,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 
@@ -31,9 +36,6 @@ public class CalendarActivity extends AppCompatActivity {
     TextView myDate;
     StorageReference storageRef;
     StorageReference fileRef;
-    FirebaseDatabase mFirebaseDatabase;
-
-    DatabaseReference databaseReference;
 
     private static final String TAG = "calendarActivity";
     private List<String> acceptList;
@@ -47,9 +49,6 @@ public class CalendarActivity extends AppCompatActivity {
 
         acceptList = (List<String>) getIntent().getSerializableExtra("recordlist");
         System.out.println("ACCEPT SIZE IS "+ acceptList.size());
-
-
-
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         myDate = (TextView) findViewById(R.id.myDate);
@@ -92,9 +91,42 @@ public class CalendarActivity extends AppCompatActivity {
                 else {
                     fileRef = storageRef.child("videos/"+date);
 
+                    /******************************add metadata*************************/
+                    StorageMetadata metadata = new StorageMetadata.Builder()
+                            .setContentType("video/mp4")
+                            .setCustomMetadata("Location", "Clayton")
+                            .build();
+                    // Update metadata properties
+                    fileRef.updateMetadata(metadata)
+                            .addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                                @Override
+                                public void onSuccess(StorageMetadata storageMetadata) {
+                                    System.out.println("Add location successfully!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Uh-oh, an error occurred!
+                                    System.out.println("Add location Failed: "+exception.toString());
+
+                                }
+                            });
+
+
+
                     File localFile = null;
                     try {
-                        localFile = File.createTempFile("videos", "video");
+                        localFile = File.createTempFile("videos", ".mp4");
+
+//                        System.out.println("path: "+ localFile.getPath());
+                        File des = new File("storage/emulated/0/DCIM/"+date+".mp4");
+
+                        copy(localFile,des);
+
+                        System.out.println("copy file exists: "+des.exists());
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -179,6 +211,24 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
 
+    }
+    public static void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } finally {
+                out.close();
+            }
+        } finally {
+            in.close();
+        }
     }
 
 
