@@ -16,8 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseUser currentUser;
     private TextView emailView;
     private FirebaseFirestore db;
+    private Uri downloadUri;
+
 
     public static final int MAX_SIZE = 100;
     private static final String TAG = "Upload Video";
@@ -180,7 +184,6 @@ public class MainActivity extends AppCompatActivity implements
         if (videouri != null) {
 
 
-
             UploadTask uploadTask = videoref.putFile(videouri);
 
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -210,8 +213,25 @@ public class MainActivity extends AppCompatActivity implements
                             int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             progressDialog.setProgress(currentProgress);
                         }
-                    });
-            uploadRefToDatabase(videoref, currentUser, strDate);
+                    }).addOnCompleteListener(
+                    new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            videoref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadUri = uri;
+                                    uploadRefToDatabase(currentUser, strDate);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    System.out.println("Fail to upload uri");
+                                }
+                            });
+                        }
+                    }
+            );
         } else {
             Toast.makeText(MainActivity.this, "Nothing to upload",
                     Toast.LENGTH_LONG).show();
@@ -220,29 +240,29 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     // upload video reference to firebase
-    public void uploadRefToDatabase(StorageReference videoref, FirebaseUser currentUser,
+    public void uploadRefToDatabase(FirebaseUser currentUser,
                                     String strDate) {
-        if (currentUser != null) {
-            // upload videos to cloud
-            Map<String, Object> user = new HashMap<>();
-            user.put(strDate, videoref.toString());
 
-            // Add a new document with user email as id
-            db.collection("users").document(Objects.requireNonNull(currentUser.getEmail()))
-                    .set(user, SetOptions.merge())
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error writing document", e);
-                        }
-                    });
-        }
+        System.out.println("upload " + downloadUri.toString());
+        // upload videos to cloud
+        Map<String, Object> user = new HashMap<>();
+        user.put(strDate, downloadUri.toString());
+
+        // Add a new document with user email as id
+        db.collection("users").document(Objects.requireNonNull(currentUser.getEmail()))
+                .set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
     public void record(View view) {
