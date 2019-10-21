@@ -304,6 +304,8 @@ public class MainActivity extends AppCompatActivity implements
 //                                        /******************************get location*************************/
                                         try {
                                             currentlocation = getLocation(new_latitude,new_longitude);
+
+                                            System.out.println("111111 "+currentlocation);
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
