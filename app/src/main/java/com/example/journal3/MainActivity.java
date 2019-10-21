@@ -45,7 +45,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements
     private SimpleDateFormat simpleDateFormat;
     private Date date;
     private long timeStamp;
-    private static final int PERMISSION_CODE=22;
+    private static final int PERMISSION_CODE = 22;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private TextView emailView;
@@ -98,14 +102,11 @@ public class MainActivity extends AppCompatActivity implements
     String currentlocation;
 
 
-
-
     public static final int MAX_SIZE = 100;
-    private static final String TAG = "Upload Video";
+    private static final String UPLOAD = "Upload Video";
+    private static final String SYNC = "Sync Video URI Locally";
 
     private List<String> recordList = new ArrayList<String>(MAX_SIZE);
-
-
 
 
     @Override
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements
         View headerview = navigationView.getHeaderView(0);
 
 
+
         // signIn button if user not exist, show email address if user exists
         mSignIn = headerview.findViewById(R.id.nav_sign_in_btn);
         emailView = headerview.findViewById(R.id.emailView);
@@ -176,6 +178,25 @@ public class MainActivity extends AppCompatActivity implements
             emailView.setVisibility(View.VISIBLE);
             String email = currentUser.getEmail();
             emailView.setText(email);
+            db = FirebaseFirestore.getInstance();
+
+//            DocumentReference userRef = db.collection("users").document(Objects.requireNonNull(email));
+//            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//                        if (Objects.requireNonNull(document).exists()) {
+//                            Log.d(SYNC, "DocumentSnapshot data: " + document.getData());
+//                        } else {
+//                            Log.d(SYNC, "No such document");
+//                        }
+//                    } else {
+//                        Log.d(SYNC, "get failed with ", task.getException());
+//                    }
+//                }
+//            });
+
         }
 
         // Add select item listener for navigation drawer
@@ -185,16 +206,22 @@ public class MainActivity extends AppCompatActivity implements
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.signOut: {
-                                System.out.println("select signout");
-                                mSignIn.setVisibility(View.VISIBLE);
-                                emailView.setVisibility(View.GONE);
-                                mAuth.signOut();
-                                System.out.println("Sign out complete");
-                                Intent i = new Intent(MainActivity.this,
-                                        MainActivity.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(i);
-                                MainActivity.this.finish();
+                                if (currentUser != null) {
+                                    System.out.println("select signout");
+                                    mSignIn.setVisibility(View.VISIBLE);
+                                    emailView.setVisibility(View.GONE);
+                                    mAuth.signOut();
+                                    System.out.println("Sign out complete");
+                                    Intent i = new Intent(MainActivity.this,
+                                            MainActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+                                    MainActivity.this.finish();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "User doesn't sign in",
+                                            Toast.LENGTH_LONG).show();
+                                }
+
                             }
                             break;
                         }
@@ -206,13 +233,13 @@ public class MainActivity extends AppCompatActivity implements
         //add
 
 
-
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         storageRef = FirebaseStorage.getInstance().getReference();
 
 
 //        videoref =mStorageRef.child("/videos" + "/userIntro.3gp");
+
 
     }
 
@@ -229,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.calendar: {
                 System.out.println("select calendar");
                 Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-                intent.putExtra("recordlist",(Serializable) recordList);
+                intent.putExtra("recordlist", (Serializable) recordList);
                 startActivity(intent);
 
             }
@@ -249,13 +276,11 @@ public class MainActivity extends AppCompatActivity implements
             System.out.println("Time is : " + timeStamp);
 
             // initialize Firestore
-            db = FirebaseFirestore.getInstance();
             simpleDateFormat = new SimpleDateFormat("MM_dd_yyyy");
             date = new Date(timeStamp);
             strDate = simpleDateFormat.format(date);
             System.out.println("Date is : " + strDate);
-            videoref = storageRef.child("/videos" + "/" + strDate);;
-
+            videoref = storageRef.child("/videos" + "/" + strDate);
 
 
             progressDialog = new ProgressDialog(this);
@@ -285,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements
 //                            System.out.println("list size is "+list.size());
                                 /******************************get location*************************/
                                 checkGPSSettings();
-                                System.out.println("currentLocation is " +currentlocation);
+                                System.out.println("currentLocation is " + currentlocation);
 
                             }
                         }).addOnProgressListener(
@@ -308,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements
                                         uploadRefToDatabase(currentUser, strDate);
 //                                        /******************************get location*************************/
 //                                        checkGPSSettings();
-                                        System.out.println("1111111currentLocation is " +currentlocation);
+                                        System.out.println("1111111currentLocation is " + currentlocation);
 
                                         /******************************add metadata*************************/
                                         StorageMetadata metadata = new StorageMetadata.Builder()
@@ -327,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements
                                                     @Override
                                                     public void onFailure(@NonNull Exception exception) {
                                                         // Uh-oh, an error occurred!
-                                                        System.out.println("Add location Failed: "+exception.toString());
+                                                        System.out.println("Add location Failed: " + exception.toString());
 
                                                     }
                                                 });
@@ -353,9 +378,6 @@ public class MainActivity extends AppCompatActivity implements
         }
 
 
-
-
-
     }
 
     // upload video reference to firebase
@@ -373,13 +395,13 @@ public class MainActivity extends AppCompatActivity implements
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        Log.d(UPLOAD, "DocumentSnapshot successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
+                        Log.w(UPLOAD, "Error writing document", e);
                     }
                 });
     }
@@ -387,12 +409,11 @@ public class MainActivity extends AppCompatActivity implements
     public void record(View view) {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
-        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,3);
+        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 3);
 
 
         startActivityForResult(intent, REQUEST_CODE);
     }
-
 
 
     @Override
@@ -407,21 +428,20 @@ public class MainActivity extends AppCompatActivity implements
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Video recording cancelled.",
                         Toast.LENGTH_LONG).show();
-            }else if(requestCode ==2) {
+            } else if (requestCode == 2) {
                 checkGPSSettings();
                 return;
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Failed to record video",
                         Toast.LENGTH_LONG).show();
             }
         }
     }
+
     public void checkGPSSettings() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        locationListener = new LocationListener()
-        {
+        locationListener = new LocationListener() {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -450,14 +470,13 @@ public class MainActivity extends AppCompatActivity implements
 //                currentlocation = latitude +","+longitude;
 
                 try {
-                    currentlocation = getLocation(latitude,longitude);
+                    currentlocation = getLocation(latitude, longitude);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }
         };
-
 
 
         // Location hardware setting enabled?
@@ -501,10 +520,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-
-
-
-
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
@@ -522,6 +537,7 @@ public class MainActivity extends AppCompatActivity implements
         }
         return true;
     }
+
     public void startLocalisation() {
 
         // parameters of location service
@@ -552,7 +568,6 @@ public class MainActivity extends AppCompatActivity implements
         }
 
 
-
         boolean gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
@@ -566,7 +581,7 @@ public class MainActivity extends AppCompatActivity implements
             lm.requestLocationUpdates(providerGPS, 0, 0, locationListener);
             gps_loc = lm.getLastKnownLocation(providerGPS);
         }
-        if (network_enabled){
+        if (network_enabled) {
             Log.d("haha", " net_enabled");
             lm.requestLocationUpdates(providerNET, 0, 0, locationListener);
             net_loc = lm.getLastKnownLocation(providerNET);
@@ -617,6 +632,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -645,15 +661,15 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public String getLocation(double latitude,double longtitude) throws IOException {
+    public String getLocation(double latitude, double longtitude) throws IOException {
         String city = "";
         Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
         try {
-            List<Address> addresses= geocoder.getFromLocation(latitude,longtitude,1);
+            List<Address> addresses = geocoder.getFromLocation(latitude, longtitude, 1);
             String address = addresses.get(0).getAddressLine(0);
             city = addresses.get(0).getLocality();
-            Log.d("address","Complets Address: "+ addresses.toString());
-            Log.d("address","Address: "+ address);
+            Log.d("address", "Complets Address: " + addresses.toString());
+            Log.d("address", "Address: " + address);
 
         } catch (Exception e) {
             e.printStackTrace();

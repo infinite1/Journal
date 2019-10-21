@@ -17,7 +17,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
         android:text="Mark Your Dates"
-        android:textAlignment="center"
         android:textColor="#FFF"
         android:textSize="23sp" />
 
