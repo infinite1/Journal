@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements
     private SimpleDateFormat simpleDateFormat;
     private Date date;
     private long timeStamp;
-    private static final int PERMISSION_CODE=22;
+    private static final int PERMISSION_CODE = 22;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private TextView emailView;
@@ -100,14 +100,10 @@ public class MainActivity extends AppCompatActivity implements
     private double new_latitude;
 
 
-
-
     public static final int MAX_SIZE = 100;
     private static final String TAG = "Upload Video";
 
     private List<String> recordList = new ArrayList<String>(MAX_SIZE);
-
-
 
 
     @Override
@@ -208,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements
         //add
 
 
-
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -231,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.calendar: {
                 System.out.println("select calendar");
                 Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-                intent.putExtra("recordlist",(Serializable) recordList);
+                intent.putExtra("recordlist", (Serializable) recordList);
                 startActivity(intent);
 
             }
@@ -256,8 +251,8 @@ public class MainActivity extends AppCompatActivity implements
             date = new Date(timeStamp);
             strDate = simpleDateFormat.format(date);
             System.out.println("Date is : " + strDate);
-            videoref = storageRef.child("/videos" + "/" + strDate);;
-
+            videoref = storageRef.child("/videos" + "/" + strDate);
+            ;
 
 
             progressDialog = new ProgressDialog(this);
@@ -284,23 +279,8 @@ public class MainActivity extends AppCompatActivity implements
                                         Toast.LENGTH_LONG).show();
                                 progressDialog.dismiss();
                                 recordList.add(strDate);
-//                            System.out.println("list size is "+list.size());
                                 /******************************get location*************************/
-//                                while(latitude==0.0 && longitude==0.0)  {
-
-//                                checkGPSSettings();
-//                                if(new_latitude!=0&&new_longitude!=0)
-//                                {
-//                                    System.out.println("latitude:" +new_latitude);
-//                                    System.out.println("longitude:" +new_longitude);
-//                                    try {
-//                                        currentlocation = getLocation(new_latitude,new_longitude);
-//                                        System.out.println("222222"+currentlocation);
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                }
-
+                                checkGPSSettings();
 
                             }
                         }).addOnProgressListener(
@@ -322,9 +302,11 @@ public class MainActivity extends AppCompatActivity implements
                                         downloadUri = uri;
                                         uploadRefToDatabase(currentUser, strDate);
 //                                        /******************************get location*************************/
-//                                        checkGPSSettings();
-//                                        System.out.println("1111111currentLocation is " +currentlocation);
-
+                                        try {
+                                            currentlocation = getLocation(new_latitude,new_longitude);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                         /******************************add metadata*************************/
                                         StorageMetadata metadata = new StorageMetadata.Builder()
                                                 .setContentType("video/mp4")
@@ -342,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements
                                                     @Override
                                                     public void onFailure(@NonNull Exception exception) {
                                                         // Uh-oh, an error occurred!
-                                                        System.out.println("Add location Failed: "+exception.toString());
+                                                        System.out.println("Add location Failed: " + exception.toString());
 
                                                     }
                                                 });
@@ -366,9 +348,6 @@ public class MainActivity extends AppCompatActivity implements
             Toast.makeText(MainActivity.this, "User doesn't sign in",
                     Toast.LENGTH_LONG).show();
         }
-
-
-
 
 
     }
@@ -402,12 +381,11 @@ public class MainActivity extends AppCompatActivity implements
     public void record(View view) {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
-        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,3);
+        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 3);
 
 
         startActivityForResult(intent, REQUEST_CODE);
     }
-
 
 
     @Override
@@ -422,21 +400,20 @@ public class MainActivity extends AppCompatActivity implements
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Video recording cancelled.",
                         Toast.LENGTH_LONG).show();
-            }else if(requestCode ==2) {
+            } else if (requestCode == 2) {
                 checkGPSSettings();
                 return;
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Failed to record video",
                         Toast.LENGTH_LONG).show();
             }
         }
     }
+
     public void checkGPSSettings() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        locationListener = new LocationListener()
-        {
+        locationListener = new LocationListener() {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -458,28 +435,23 @@ public class MainActivity extends AppCompatActivity implements
 
             @Override
             public void onLocationChanged(Location location) {
-                 double longitude = location.getLongitude();
+                double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
                 //location.getProvider();
                 Log.d("haha", "" + location.getProvider() + " Location latitude " + latitude + "\nlongitude:" + longitude);
-//                while(latitude!=0.0&&longitude!=0.0) {
-//                    return;
-//                }
+
                 new_latitude = latitude;
                 new_longitude = longitude;
-                System.out.println("new latitude is "+new_latitude);
-                System.out.println("new longitude is "+new_longitude);
-//                currentlocation = latitude +","+longitude;
-
-//                try {
-//                    currentlocation = getLocation(latitude,longitude);
-//                    System.out.println("222222"+currentlocation);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                System.out.println("new latitude is " + new_latitude);
+                System.out.println("new longitude is " + new_longitude);
+                lm.removeUpdates(locationListener);
+                lm = null;
 
             }
         };
+
+
+
 
 
 

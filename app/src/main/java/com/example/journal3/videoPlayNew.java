@@ -5,12 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
-
 import android.widget.TextView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
 
 
 public class videoPlayNew extends AppCompatActivity{
@@ -21,11 +16,7 @@ public class videoPlayNew extends AppCompatActivity{
 
     //add
     private static final int REQUEST_CODE  = 1000;
-    TextView txt_location;
-
-    FusedLocationProviderClient fusedLocationProviderClient;
-    LocationRequest locationRequest;
-    LocationCallback locationCallback;
+    TextView locatioView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +26,16 @@ public class videoPlayNew extends AppCompatActivity{
         MediaController mediaController =new MediaController(this);
 
         mainVideoView = (VideoView) findViewById(R.id.vid);
+        locatioView = (TextView) findViewById(R.id.locationView);
 
         mainVideoView.setMediaController(mediaController);
         mediaController.setAnchorView(mainVideoView);
         Bundle data = getIntent().getExtras();
         String videourl = data.getString("videourl");
+        String location = data.getString("location");
+        System.out.println("location from calendar is "+location);
 
+        locatioView.setText(location);
         videoUri = Uri.parse(videourl);
         mainVideoView.setVideoURI(videoUri);
 //        mainVideoView.requestFocus();
