@@ -14,4 +14,14 @@
     <string name="create_password">Password must be at least 6 characters</string>
     <string name="loading">Loading</string>
     <string name="nav_head_sign_in_sign_up">Sign In/Sign Up</string>
+    <string name="email_address">User Email</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="back">Back</string>
+    <string name="mash">Mash</string>
+    <string name="music">music</string>
+    <string name="calendar">calendar</string>
+    <string name="order">order</string>
+    <string name="share">share</string>
+    <string name="save">save</string>
+    <string name="upload_vedio">upload video</string>
 </resources>

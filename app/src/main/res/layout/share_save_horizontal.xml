@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    tools:context=".SaveShare">
+
+    <!--    <ImageView-->
+    <!--        android:layout_width="236dp"-->
+    <!--        android:layout_height="314dp"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:src="@mipmap/video_player" />-->
+
+    <VideoView
+        android:id="@+id/merge_video"
+        android:layout_width="467dp"
+        android:layout_height="322dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="147dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="130dp"
+            android:background="@drawable/demo_button"
+            android:text="@string/save"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/share_to_other_app"
+            android:layout_width="147dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/demo_button"
+            android:text="@string/share"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

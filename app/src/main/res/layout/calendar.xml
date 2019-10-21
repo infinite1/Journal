@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_marginTop="48dp"
         android:background="@drawable/bg_calendar"
-        android:layout_marginLeft="55dp"
+        android:layout_marginLeft="58dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content">
 
