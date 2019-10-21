@@ -71,6 +71,7 @@ public class CalendarActivity extends AppCompatActivity {
                     Toast.makeText(context,"No Video Record for That Day",Toast.LENGTH_SHORT).show();
 
                 }
+
                 else {
                     fileRef = storageRef.child("videos/"+date);
                     fileRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
@@ -101,6 +102,7 @@ public class CalendarActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                     fileRef.getFile(localFile)
                             .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                 @Override
@@ -123,6 +125,7 @@ public class CalendarActivity extends AppCompatActivity {
                                     intent.putExtra("videourl" ,url.toString());
                                     startActivity(intent);
                                 }
+
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {

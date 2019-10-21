@@ -315,10 +315,6 @@ public class MainActivity extends AppCompatActivity implements
                     Toast.LENGTH_LONG).show();
         }
 
-
-
-
-
     }
 
     // upload video reference to firebase
