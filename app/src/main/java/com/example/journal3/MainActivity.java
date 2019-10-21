@@ -95,7 +95,9 @@ public class MainActivity extends AppCompatActivity implements
     //location
     private LocationManager lm;
     LocationListener locationListener;
-    String currentlocation;
+    String currentlocation = "carlton";
+    private double new_longitude;
+    private double new_latitude;
 
 
 
@@ -284,8 +286,21 @@ public class MainActivity extends AppCompatActivity implements
                                 recordList.add(strDate);
 //                            System.out.println("list size is "+list.size());
                                 /******************************get location*************************/
-                                checkGPSSettings();
-                                System.out.println("currentLocation is " +currentlocation);
+//                                while(latitude==0.0 && longitude==0.0)  {
+
+//                                checkGPSSettings();
+//                                if(new_latitude!=0&&new_longitude!=0)
+//                                {
+//                                    System.out.println("latitude:" +new_latitude);
+//                                    System.out.println("longitude:" +new_longitude);
+//                                    try {
+//                                        currentlocation = getLocation(new_latitude,new_longitude);
+//                                        System.out.println("222222"+currentlocation);
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+
 
                             }
                         }).addOnProgressListener(
@@ -308,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements
                                         uploadRefToDatabase(currentUser, strDate);
 //                                        /******************************get location*************************/
 //                                        checkGPSSettings();
-                                        System.out.println("1111111currentLocation is " +currentlocation);
+//                                        System.out.println("1111111currentLocation is " +currentlocation);
 
                                         /******************************add metadata*************************/
                                         StorageMetadata metadata = new StorageMetadata.Builder()
@@ -443,17 +458,25 @@ public class MainActivity extends AppCompatActivity implements
 
             @Override
             public void onLocationChanged(Location location) {
-                double longitude = location.getLongitude();
+                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
                 //location.getProvider();
                 Log.d("haha", "" + location.getProvider() + " Location latitude " + latitude + "\nlongitude:" + longitude);
+//                while(latitude!=0.0&&longitude!=0.0) {
+//                    return;
+//                }
+                new_latitude = latitude;
+                new_longitude = longitude;
+                System.out.println("new latitude is "+new_latitude);
+                System.out.println("new longitude is "+new_longitude);
 //                currentlocation = latitude +","+longitude;
 
-                try {
-                    currentlocation = getLocation(latitude,longitude);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    currentlocation = getLocation(latitude,longitude);
+//                    System.out.println("222222"+currentlocation);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         };
@@ -499,11 +522,6 @@ public class MainActivity extends AppCompatActivity implements
             startActivityForResult(intent, 2);
         }
     }
-
-
-
-
-
 
     @Override
     protected void onDestroy() {
@@ -647,19 +665,25 @@ public class MainActivity extends AppCompatActivity implements
 
     public String getLocation(double latitude,double longtitude) throws IOException {
         String city = "";
+        String subadmin="";
+        String admin = "";
         Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
-        try {
-            List<Address> addresses= geocoder.getFromLocation(latitude,longtitude,1);
-            String address = addresses.get(0).getAddressLine(0);
-            city = addresses.get(0).getLocality();
-            Log.d("address","Complets Address: "+ addresses.toString());
-            Log.d("address","Address: "+ address);
+            try {
+                List<Address> addresses = geocoder.getFromLocation(latitude, longtitude, 1);
+                String address = addresses.get(0).getAddressLine(0);
+                city = addresses.get(0).getLocality();
+                subadmin = addresses.get(0).getSubAdminArea();
+                admin = addresses.get(0).getAdminArea();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                Log.d("address", "Complets Address: " + addresses.toString());
+                Log.d("address", "Address: " + address);
 
-        return city;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        return (city+","+subadmin+","+admin);
     }
 
 
