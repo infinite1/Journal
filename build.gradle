@@ -17,9 +17,27 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
         jcenter()
-        
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        //maven {
+        //  url 'https://maven.google.com'
+        //}
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        //maven {
+        //  url 'https://maven.google.com'
+        //}
     }
 }
 
