@@ -263,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements
             progressDialog.setTitle("Uploading file..");
             progressDialog.setProgress(0);
             progressDialog.show();
+
             if (videouri != null) {
                 UploadTask uploadTask = videoref.putFile(videouri);
 
@@ -288,6 +289,7 @@ public class MainActivity extends AppCompatActivity implements
                                 System.out.println("currentLocation is " +currentlocation);
 
                             }
+
                         }).addOnProgressListener(
                         new OnProgressListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -342,7 +344,6 @@ public class MainActivity extends AppCompatActivity implements
                         }
                 );
 
-
             } else {
                 Toast.makeText(MainActivity.this, "Nothing to upload",
                         Toast.LENGTH_LONG).show();
@@ -380,6 +381,7 @@ public class MainActivity extends AppCompatActivity implements
                 });
     }
 
+
     public void record(View view) {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
@@ -413,6 +415,8 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
     }
+
+
     public void checkGPSSettings() {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -496,11 +500,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-
-
-
-
-
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
@@ -518,6 +517,7 @@ public class MainActivity extends AppCompatActivity implements
         }
         return true;
     }
+
     public void startLocalisation() {
 
         // parameters of location service
@@ -613,6 +613,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -646,7 +647,9 @@ public class MainActivity extends AppCompatActivity implements
         Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
         try {
             List<Address> addresses= geocoder.getFromLocation(latitude,longtitude,1);
+
             String address = addresses.get(0).getAddressLine(0);
+
             city = addresses.get(0).getLocality();
             Log.d("address","Complets Address: "+ addresses.toString());
             Log.d("address","Address: "+ address);
