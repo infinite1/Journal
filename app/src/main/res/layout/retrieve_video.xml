@@ -11,9 +11,6 @@
         android:layout_height="404dp"
         tools:ignore="MissingConstraints" />
 
-
-
-
     <TextView
         android:id="@+id/v_location"
         android:layout_width="wrap_content"
@@ -24,9 +21,9 @@
         android:textColor="#000000"/>
 
     <TextView
-        android:id="@+id/locatioView"
-        android:layout_width="wrap_content"
-        android:layout_height="73dp"
+        android:id="@+id/locationView"
+        android:layout_width="375dp"
+        android:layout_height="52dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="500dp"
         android:ems="15"

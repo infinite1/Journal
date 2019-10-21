@@ -40,6 +40,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     private static final String TAG = "calendarActivity";
     private List<String> acceptList;
+    private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,6 @@ public class CalendarActivity extends AppCompatActivity {
                     Toast.makeText(context,"No Video Record for That Day",Toast.LENGTH_SHORT).show();
 
                 }
-
                 else {
                     fileRef = storageRef.child("videos/"+date);
                     fileRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
@@ -103,6 +103,18 @@ public class CalendarActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                    fileRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                        @Override
+                        public void onSuccess(StorageMetadata storageMetadata) {
+                            location = storageMetadata.getCustomMetadata("Location");
+                            System.out.println("Successfully get location from firebase:"+location);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+
+                        }
+                    });
                     fileRef.getFile(localFile)
                             .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                 @Override
@@ -121,11 +133,12 @@ public class CalendarActivity extends AppCompatActivity {
                                     Toast.makeText(CalendarActivity.this, "Download complete:"+
                                                     url.toString(),
                                             Toast.LENGTH_LONG).show();
+
                                     Intent intent = new Intent(CalendarActivity.this, videoPlayNew.class);
                                     intent.putExtra("videourl" ,url.toString());
+                                    intent.putExtra("location",location);
                                     startActivity(intent);
                                 }
-
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
