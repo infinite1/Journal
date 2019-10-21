@@ -25,10 +25,13 @@
         android:layout_marginTop="15dp"
         android:src="@mipmap/calendar" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:background="@color/smallwindow_blue"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -38,26 +41,61 @@
             android:background="@color/smallwindow_blue"
             android:gravity="center"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80dp"
-                android:text="Old to New"
+                android:text="SELECT FIRST DATE"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
-
             <TextView
+                android:id="@+id/start_date"
                 android:layout_width="wrap_content"
-                android:layout_height="108dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="New to Old"
+                android:text="DAY/MONTH/YEAR"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@color/smallwindow_blue"
+            android:gravity="center"
+            android:orientation="vertical"><TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELECT LAST DATE"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="DAY/MONTH/YEAR"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:onClick="select_date_end" />
+        </LinearLayout>
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="OK"
+            android:id="@+id/ok"
+            android:textSize="30sp">
 
+        </TextView>
+
+    </LinearLayout>
 </LinearLayout>
