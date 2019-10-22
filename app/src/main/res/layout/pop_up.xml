@@ -33,26 +33,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="151dp"
             android:layout_weight="1"
-            android:background="@color/smallwindow_blue"
+            android:background="@color/color2"
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/demo_button"
                 android:text="Old to New"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="108dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/demo_button"
                 android:text="New to Old"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

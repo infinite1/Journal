@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#03a9f4</color>
-    <color name="colorPrimaryDark">#007ac1</color>
+    <color name="colorPrimary">#9F5F9F</color>
+    <color name="colorPrimaryDark">#D8BFD8</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorLight">#d05ce3</color>
     <color name="white">#FCF9F9</color>
@@ -10,4 +10,8 @@
     <color name="smallwindow_purple">#BA835AD6</color>
     <color name="smallwindow_grey">#BAA09BB3</color>
     <color name="mash_button">#AB3C86D5</color>
+
+    <color name="color1">#9F5F9F</color>
+    <color name="color2">#D8BFD8</color>
+    <color name="color3">#D81B60</color>
 </resources>
