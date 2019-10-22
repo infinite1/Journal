@@ -38,7 +38,7 @@
             android:onClick="record"
             android:layout_alignParentEnd="true"
             app:backgroundTint="#FFFFFF"
-            android:src="@drawable/ic_add_black_24dp">
+            android:src="@mipmap/camera">
 
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>

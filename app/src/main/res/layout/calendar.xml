@@ -20,7 +20,7 @@
         android:textAlignment="center"
         android:textColor="#FFF"
         android:textSize="23sp"
-        android:layout_marginLeft="105dp"
+        android:layout_gravity="center"
         android:layout_marginTop="48dp"
         />
 
