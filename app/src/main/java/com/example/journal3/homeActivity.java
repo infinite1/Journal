@@ -146,7 +146,7 @@ public class homeActivity extends AppCompatActivity implements
         mBtmView.setOnNavigationItemSelectedListener(this);
 
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerview = navigationView.getHeaderView(0);
