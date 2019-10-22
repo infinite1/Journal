@@ -16,10 +16,10 @@
 
 
 
-        <include
-            layout="@layout/app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+<!--        <include-->
+<!--            layout="@layout/app_bar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
 
 
 
@@ -51,7 +51,7 @@
             android:onClick="record"
             android:layout_alignParentEnd="true"
             app:backgroundTint="#FFFFFF"
-            android:src="@drawable/ic_add_black_24dp">
+            android:src="@mipmap/camera">
 
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
