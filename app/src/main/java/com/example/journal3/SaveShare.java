@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.googlecode.mp4parser.authoring.tracks.AppendTrack;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -127,7 +129,14 @@ public class SaveShare extends AppCompatActivity {
         mVideoView.setVideoPath(mergefile.getPath());
         mVideoView.seekTo(0);
         mVideoView.requestFocus();
+
+
+
+        MediaController m=new MediaController(this);
+        mVideoView.setMediaController(m);
+        m.setAnchorView(mVideoView);
         mVideoView.start();
+
 
 
         Button btnshare_to_other_app;
@@ -137,18 +146,11 @@ public class SaveShare extends AppCompatActivity {
 
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);            //分享视频只能单个分享
-                shareIntent.putExtra(Intent.EXTRA_STREAM, mergefile.getPath());
-                shareIntent.setType("vedio/*");
+                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(mergefile.getPath()));
+                shareIntent.setType("video/*");
                 startActivity(Intent.createChooser(shareIntent, "Share to...."));
             }
         });
-
-
-
-
-
-
-
 
     }
 

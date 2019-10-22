@@ -8,24 +8,26 @@
     android:orientation="vertical"
     tools:context=".homeActivity">
 
-    <Button
-        android:onClick="save_share"
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
         android:id="@+id/save_share"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
+        android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:background="@drawable/demo_button"
+        android:onClick="save_share"
         android:text="@string/mash"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
 
     <VideoView
         android:layout_width="336dp"
         android:layout_height="286dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_marginBottom="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

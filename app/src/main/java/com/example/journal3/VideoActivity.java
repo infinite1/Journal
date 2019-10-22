@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -23,16 +27,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class VideoActivity extends AppCompatActivity {
     private int REQUEST_TAKE_GALLERY_VIDEO1=100;
     private int REQUEST_TAKE_GALLERY_VIDEO2=101;
     private int PERMISSION_CODE=99;
     Dialog demo_dialog;
-    Button mash;
+    CircularProgressButton mash;
     private Uri videoUri;
     private Uri videoUri2;
     private String videoUriPath;
@@ -43,6 +54,7 @@ public class VideoActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetLinstenner2;
     private String start_date;
     private String end_date;
+    private java.util.Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,21 +112,28 @@ public class VideoActivity extends AppCompatActivity {
 
         demo_dialog = new Dialog(this);
 
-        mash = findViewById(R.id.save_share);
+        mash = (CircularProgressButton) findViewById(R.id.save_share);
         mash.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                Intent intent = new Intent(VideoActivity.this, SaveShare.class);
-                Log.v("TEST:",videoUriPath);
-                Log.v("TEST:",videoUri2Path);
-                intent.putExtra("videoUri",videoUriPath);
-                intent.putExtra("videoUri2",videoUri2Path);
+                mash.startAnimation();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(VideoActivity.this," Mash finished",Toast.LENGTH_SHORT).show();
+                        mash.doneLoadingAnimation(Color.parseColor("#333639"), BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
 
-                startActivity(intent);
+                        Intent intent = new Intent(VideoActivity.this, SaveShare.class);
+                        Log.v("TEST:",videoUriPath);
+                        Log.v("TEST:",videoUri2Path);
+                        intent.putExtra("videoUri",videoUriPath);
+                        intent.putExtra("videoUri2",videoUri2Path);
+
+                        startActivity(intent);
+                    }
+                },3000);
+
             }
         });
-
-
-
     }
 
 
