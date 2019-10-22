@@ -1,17 +1,21 @@
 package com.example.journal3;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class VideoActivity extends AppCompatActivity {
@@ -32,6 +37,12 @@ public class VideoActivity extends AppCompatActivity {
     private Uri videoUri2;
     private String videoUriPath;
     private String videoUri2Path;
+    private TextView mDisplayDate1;
+    private TextView mDisplayDate2;
+    private DatePickerDialog.OnDateSetListener mDateSetLinstenner;
+    private DatePickerDialog.OnDateSetListener mDateSetLinstenner2;
+    private String start_date;
+    private String end_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +112,9 @@ public class VideoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
-    private void setFragmentIndicator(int i) {
+
+
     }
 
 
@@ -143,7 +154,70 @@ public class VideoActivity extends AppCompatActivity {
                 demo_dialog.dismiss();
             }
         });
+        TextView txtclose1;
+        txtclose1 = (TextView) demo_dialog.findViewById(R.id.ok);
+        txtclose1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                demo_dialog.dismiss();
+            }
+        });
         demo_dialog.show();
+
+        mDisplayDate1 = (TextView) demo_dialog.findViewById(R.id.start_date);
+        mDisplayDate2 = (TextView) demo_dialog.findViewById(R.id.end_date);
+
+        mDisplayDate1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(VideoActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetLinstenner, year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDisplayDate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(VideoActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetLinstenner2, year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetLinstenner = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                month = month +1;
+                String date_start = month + "/" + day + "/" + year;
+                start_date = date_start;
+                String ResourceIdAsString = view.getResources().getResourceName(view.getId());
+                Log.v("testId", String.valueOf(ResourceIdAsString));
+                mDisplayDate1.setText(date_start);
+            }
+        };
+
+        mDateSetLinstenner2 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                month = month +1;
+                String date_end = month + "/" + day + "/" + year;
+                end_date = date_end;
+                String ResourceIdAsString = view.getResources().getResourceName(view.getId());
+                Log.v("testId", String.valueOf(ResourceIdAsString));
+                mDisplayDate2.setText(date_end);
+            }
+        };
     }
 
     public void save_share(View v)
@@ -189,6 +263,10 @@ public class VideoActivity extends AppCompatActivity {
         {
             startActivityForResult(intent,REQUEST_TAKE_GALLERY_VIDEO2);
         }
+    }
+
+    public void select_last_month(View v) {
+
     }
 
     @Override
