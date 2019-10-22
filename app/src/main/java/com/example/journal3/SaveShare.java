@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -128,7 +129,14 @@ public class SaveShare extends AppCompatActivity {
         mVideoView.setVideoPath(mergefile.getPath());
         mVideoView.seekTo(0);
         mVideoView.requestFocus();
+
+
+
+        MediaController m=new MediaController(this);
+        mVideoView.setMediaController(m);
+        m.setAnchorView(mVideoView);
         mVideoView.start();
+
 
 
         Button btnshare_to_other_app;
