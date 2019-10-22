@@ -31,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,6 +63,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Vector;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
@@ -101,11 +104,34 @@ public class homeActivity extends AppCompatActivity implements
 
     private List<String> recordList = new ArrayList<String>(MAX_SIZE);
 
+    //aaaaaaaaaaaaaaaaaaaadd
+    RecyclerView recyclerView;
+    Vector<YouTubeVideos> youtubeVideos = new Vector<YouTubeVideos>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_activity);
+
+        //aaaaaaaaaaaaaaaaaaaaaadd
+
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager( new LinearLayoutManager(this));
+
+        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.bilibili.com/video/av19390801?from=search&seid=3678958349904085792\" frameborder=\"0\" allowfullscreen> </iframe>") );
+        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/mfbSqTB74xM\" frameborder=\"0\" allowfullscreen></iframe>") );
+        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/tKxHJixw87s\" frameborder=\"0\" allowfullscreen></iframe>") );
+        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/PNqgQbiXXvs\" frameborder=\"0\" allowfullscreen></iframe>") );
+        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/fuhf5l8g8j8\" frameborder=\"0\" allowfullscreen></iframe>") );
+
+        VideoAdapter videoAdapter = new VideoAdapter(youtubeVideos);
+
+        recyclerView.setAdapter(videoAdapter);
+
+
         List<String> permissionList = new ArrayList<>();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
