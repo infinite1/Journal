@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "322652795282",
-    "firebase_url": "https://sjournal-76882.firebaseio.com",
-    "project_id": "sjournal-76882",
-    "storage_bucket": "sjournal-76882.appspot.com"
+    "project_number": "937832397434",
+    "firebase_url": "https://dairy-238c7.firebaseio.com",
+    "project_id": "dairy-238c7",
+    "storage_bucket": "dairy-238c7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:322652795282:android:c440ec271e50612989114b",
+        "mobilesdk_app_id": "1:937832397434:android:d3aaa5a006ee1112a299c3",
         "android_client_info": {
           "package_name": "com.example.journal3"
         }
       },
       "oauth_client": [
         {
-          "client_id": "322652795282-r6v17cgi6gekpj36tchmjfm8kfiojclf.apps.googleusercontent.com",
+          "client_id": "937832397434-snjgb12tuf1jqumrtvd8fn2nr3jpnjro.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.journal3",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "322652795282-b18tengg67vdkikugs0v1fojqr414g4a.apps.googleusercontent.com",
+          "client_id": "937832397434-122slujlibemng19glg8lebhfruvivr3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCxBG2RsEyE_PUEd8TRFLALUc_ppDjEbiY"
+          "current_key": "AIzaSyC0dISkx9ZJdZFaPKw48B_bXXraSJjhXGQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "322652795282-b18tengg67vdkikugs0v1fojqr414g4a.apps.googleusercontent.com",
+              "client_id": "937832397434-122slujlibemng19glg8lebhfruvivr3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
