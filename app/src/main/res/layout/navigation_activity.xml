@@ -20,18 +20,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/thumbnailRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="55dp">
-        </androidx.recyclerview.widget.RecyclerView>
-
+            android:layout_height="717dp"
+            android:layout_marginBottom="55dp"></androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bot_nav"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="69dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="0dp"
-            android:background="@color/smallwindow_blue"
+            android:background="@mipmap/background0"
             app:itemTextColor="#000000"
             app:menu="@menu/bottom_navigation_menu" />
 
