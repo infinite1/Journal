@@ -22,12 +22,58 @@
         app:spinning_bar_padding="6dp"
         app:spinning_bar_width="4dp" />
 
-    <VideoView
-        android:layout_width="336dp"
-        android:layout_height="286dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:background="#10FCF9F9">
+
+        <TextView
+            android:id="@+id/Setting1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:text="DATE RANGE: "
+            android:textSize="20sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/Setting2"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:text="MESH ORDER: "
+            android:textSize="20sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/Setting3"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:text="ADD MUSIC:  NONE"
+            android:textSize="20sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

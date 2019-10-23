@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="Old to New"
+                android:text="MUSIC1"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="New to Old"
+                android:text="MUSIC2"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>

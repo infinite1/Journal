@@ -53,9 +53,18 @@ public class SaveShare extends AppCompatActivity {
             Log.i("info", "portrait");
         }
 
+        Intent intent = getIntent();
+        String start_date = intent.getStringExtra("startdate");
+        String end_date = intent.getStringExtra("enddate");
+
         File directory= new File("/storage/emulated/0/DCIM/three_second/");
         for (File file : directory.listFiles())
         {
+           String name = file.getName().replaceAll(".mp4", "");
+            String year = name.split("_")[2];
+            String month = name.split("_")[0];
+            String day = name.split("_")[1];
+            Log.v("test1", year+ month+ day);
             videosToMerge.add(file.getAbsolutePath());
         }
 

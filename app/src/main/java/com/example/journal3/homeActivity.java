@@ -159,6 +159,7 @@ public class homeActivity extends AppCompatActivity implements
         if (!permissionList.isEmpty()) {
             ActivityCompat.requestPermissions(this,
                     permissionList.toArray(new String[permissionList.size()]), PERMISSION_CODE);
+            getSupportLoaderManager().initLoader(MEDIASTORE_LOADER_ID, null, this);
         } else {
             Toast.makeText(this, "ALL Permissions granted", Toast.LENGTH_LONG).show();
         }

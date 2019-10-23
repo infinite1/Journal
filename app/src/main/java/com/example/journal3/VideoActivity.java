@@ -56,6 +56,7 @@ public class VideoActivity extends AppCompatActivity {
     private String start_date;
     private String end_date;
     private java.util.Timer timer;
+    private Boolean order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,8 @@ public class VideoActivity extends AppCompatActivity {
                         mash.doneLoadingAnimation(Color.parseColor("#333639"), BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
 
                         Intent intent = new Intent(VideoActivity.this, SaveShare.class);
+                        intent.putExtra("startdate", start_date);
+                        intent.putExtra("enddate", end_date);
 
                         startActivity(intent);
                     }
@@ -108,9 +111,37 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 demo_dialog.dismiss();
+                if (order) {
+                    TextView setting1 =(TextView) findViewById(R.id.Setting2);
+                    setting1.setText("MESH ORDER: " + "OLD TO NEW");
+                }
+                else {
+                    TextView setting1 =(TextView) findViewById(R.id.Setting2);
+                    setting1.setText("MESH ORDER: " + "NEW TO OLD");
+                }
+
             }
         });
         demo_dialog.show();
+
+        TextView order1 = (TextView) demo_dialog.findViewById(R.id.order1);
+        TextView order2 = (TextView) demo_dialog.findViewById(R.id.order2);
+
+
+        order1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order = true;
+            }
+        });
+
+        order2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order = false;
+            }
+        });
+
     }
 
     public void ShowPopup_music(View v) {
@@ -133,7 +164,11 @@ public class VideoActivity extends AppCompatActivity {
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.v("test", start_date + end_date);
                 demo_dialog.dismiss();
+                TextView setting1 =(TextView) findViewById(R.id.Setting1);
+                setting1.setText("DATE RANGE: " + start_date+ " " + end_date);
+
             }
         });
         
@@ -141,6 +176,7 @@ public class VideoActivity extends AppCompatActivity {
 
         mDisplayDate1 = (TextView) demo_dialog.findViewById(R.id.start_date);
         mDisplayDate2 = (TextView) demo_dialog.findViewById(R.id.end_date);
+
 
         mDisplayDate1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +215,7 @@ public class VideoActivity extends AppCompatActivity {
                 String ResourceIdAsString = view.getResources().getResourceName(view.getId());
                 Log.v("testId", String.valueOf(ResourceIdAsString));
                 mDisplayDate1.setText(date_start);
+
             }
         };
 
