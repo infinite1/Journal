@@ -122,7 +122,7 @@ public class homeActivity extends AppCompatActivity implements
         recyclerView.setLayoutManager( new LinearLayoutManager(this));
 
         youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.bilibili.com/video/av19390801?from=search&seid=3678958349904085792\" frameborder=\"0\" allowfullscreen> </iframe>") );
-        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/mfbSqTB74xM\" frameborder=\"0\" allowfullscreen></iframe>") );
+        youtubeVideos.add( new YouTubeVideos("<iframe src=\"https://www.youtube.com/embed/mfbSqTB74xM\" ></iframe>") );
         youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/tKxHJixw87s\" frameborder=\"0\" allowfullscreen></iframe>") );
         youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/PNqgQbiXXvs\" frameborder=\"0\" allowfullscreen></iframe>") );
         youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/fuhf5l8g8j8\" frameborder=\"0\" allowfullscreen></iframe>") );

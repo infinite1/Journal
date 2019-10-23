@@ -89,7 +89,7 @@
             android:layout_width="74dp"
             android:layout_height="38dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBotton="20dp"
+
             android:layout_gravity="center_horizontal"
             android:background="@color/color3"
             android:text="OK"
