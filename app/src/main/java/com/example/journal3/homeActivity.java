@@ -75,7 +75,8 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 
 public class homeActivity extends AppCompatActivity implements
-        BottomNavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
+        BottomNavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor>
+        , MediaStoreAdapter.OnClickThumbListener{
     private Toolbar myToolbar;
     private Button mSignIn;
     private BottomNavigationView mBtmView;
@@ -721,6 +722,13 @@ public class homeActivity extends AppCompatActivity implements
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         mMediaStoreAdapter.changeCursor(null);
+    }
+
+    @Override
+    public void onClickImage(Uri imageUri) {
+        Toast.makeText(homeActivity.this, "ImageUri = " + imageUri.toString()
+                 , Toast.LENGTH_SHORT).show();
+
     }
 }
 

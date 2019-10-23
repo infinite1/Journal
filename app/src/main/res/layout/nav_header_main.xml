@@ -12,12 +12,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="102dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
         android:contentDescription="@string/profile_image"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@mipmap/ic_launcher_round"
-        android:layout_marginBottom="18dp"/>
+        app:srcCompat="@mipmap/user" />
 
     <Button
         android:id="@+id/nav_sign_in_btn"

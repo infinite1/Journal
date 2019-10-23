@@ -13,13 +13,21 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 public class MediaStoreAdapter extends RecyclerView.Adapter<MediaStoreAdapter.ViewHolder> {
 
     private Cursor mMediaStoreCursor;
     private final Activity mAcitivty;
+    private OnClickThumbListener mOnClickThumbListener;
+    public interface OnClickThumbListener {
+        void  onClickImage (Uri imageUri);
+    }
 
-    public MediaStoreAdapter(Activity mAcitivty) {
+    public MediaStoreAdapter(Activity mAcitivty)
+    {
         this.mAcitivty = mAcitivty;
+        this.mOnClickThumbListener=(OnClickThumbListener)mAcitivty;
     }
 
     @Override
@@ -30,11 +38,15 @@ public class MediaStoreAdapter extends RecyclerView.Adapter<MediaStoreAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Bitmap bitmap = getBitmapFromMediaStore(position);
-        if (bitmap != null)
-        {
-            holder.getmImageView().setImageBitmap(bitmap);
-        }
+//        Bitmap bitmap = getBitmapFromMediaStore(position);
+//        if (bitmap != null)
+//        {
+//            holder.getmImageView().setImageBitmap(bitmap);
+//        }
+        Glide.with(mAcitivty).load(getUriFromMediaStore(position))
+                .centerCrop()
+                .override(96,96)
+                .into(holder.getmImageView());
 
     }
 
@@ -43,18 +55,35 @@ public class MediaStoreAdapter extends RecyclerView.Adapter<MediaStoreAdapter.Vi
         return (mMediaStoreCursor == null) ? 0 : mMediaStoreCursor.getCount();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+
+
+
+
+
+    public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView mImageView;
 
         public ViewHolder(View itemView){
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.mediastoreImageView);
+            mImageView.setOnClickListener(this);
         }
 
         public ImageView getmImageView() {
             return mImageView;
         }
+
+        @Override
+        public void onClick(View v) {
+            getOnClickUri(getAdapterPosition());
+        }
     }
+
+
+
+
+
 
     private Cursor swapCursor(Cursor cursor) {
         if (mMediaStoreCursor == cursor) {
@@ -106,6 +135,26 @@ public class MediaStoreAdapter extends RecyclerView.Adapter<MediaStoreAdapter.Vi
         Uri mediaUri = Uri.parse("file://" + dataString);
 
         return mediaUri;
+    }
+
+    private void getOnClickUri(int position)
+    {
+        int mediaTypeIndex = mMediaStoreCursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE);
+        int dataIndex=mMediaStoreCursor.getColumnIndex(MediaStore.Files.FileColumns.DATA);
+
+        mMediaStoreCursor.moveToPosition(position);
+        switch(mMediaStoreCursor.getInt(mediaTypeIndex))
+        {
+            case MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE:
+                String dataString=mMediaStoreCursor.getString(dataIndex);
+                Uri imageUri=Uri.parse("file://" + dataString);
+                mOnClickThumbListener.onClickImage(imageUri);
+                break;
+            case MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO:
+
+                break;
+            default:
+        }
     }
 
 }
