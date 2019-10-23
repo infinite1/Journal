@@ -20,8 +20,23 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/thumbnailRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="717dp"
+            android:layout_height="666dp"
+            android:layout_marginTop="60dp"
             android:layout_marginBottom="55dp"></androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="My Moments"
+            android:gravity="center"
+            android:background="@drawable/bg_button"
+            android:textColor="#FFF"
+
+            android:textSize="20dp">
+
+        </Button>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bot_nav"
