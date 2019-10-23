@@ -27,10 +27,10 @@ public class MediaStoreAdapter extends RecyclerView.Adapter<MediaStoreAdapter.Vi
 
     }
 
-    public MediaStoreAdapter(Activity mAcitivty)
+    public MediaStoreAdapter(Activity activity)
     {
-        this.mAcitivty = mAcitivty;
-        this.mOnClickThumbListener=(OnClickThumbListener)mAcitivty;
+        this.mAcitivty = activity;
+        this.mOnClickThumbListener=(OnClickThumbListener)activity;
     }
 
     @Override
@@ -145,9 +145,10 @@ public class MediaStoreAdapter extends RecyclerView.Adapter<MediaStoreAdapter.Vi
         int mediaTypeIndex = mMediaStoreCursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE);
         int dataIndex=mMediaStoreCursor.getColumnIndex(MediaStore.Files.FileColumns.DATA);
 
+        mMediaStoreCursor.moveToPosition(position);
         String dataString=mMediaStoreCursor.getString(dataIndex);
         Uri mediaUri=Uri.parse("file://" + dataString);
-        mMediaStoreCursor.moveToPosition(position);
+
         switch(mMediaStoreCursor.getInt(mediaTypeIndex))
         {
             case MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE:
