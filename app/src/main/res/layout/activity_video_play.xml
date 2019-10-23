@@ -12,22 +12,24 @@
         android:id="@+id/surfaceView"
         android:layout_width="312dp"
         android:layout_height="535dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/videoPlayPauseButton"
-        style="@android:style/Widget.DeviceDefault.ImageButton"
-        android:layout_width="75dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="24dp"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="48dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="48dp"
+        android:scaleType="fitCenter"
         android:background="#00FFFFFF"
         android:onClick="playPauseClick"
         android:src="@mipmap/ic_launcher_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
