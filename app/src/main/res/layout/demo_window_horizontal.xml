@@ -26,26 +26,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                android:id="@+id/save_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/mesh_btn"
+                android:onClick="save_share"
+                android:text="@string/mash"
+                android:textColor="#FFF"
+                app:spinning_bar_color="#FFF"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp" />
             <Button
                 android:layout_width="102dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/demo_button"
                 android:onClick="ShowPopup_order"
                 android:text="@string/order"
                 android:textColor="@color/black" />
 
-            <Button
-                android:id="@+id/save_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/demo_button"
-                android:onClick="save_share"
-                android:text="@string/mash"
-                android:textColor="@color/black" />
+
 
             <Button
                 android:layout_width="102dp"

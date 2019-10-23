@@ -37,7 +37,7 @@
             android:layout_marginTop="130dp"
             android:background="@drawable/demo_button"
             android:text="@string/save"
-            android:textColor="@color/black" />
+            android:textColor="#FFF" />
 
         <Button
             android:id="@+id/share_to_other_app"
@@ -47,7 +47,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/demo_button"
             android:text="@string/share"
-            android:textColor="@color/black" />
+            android:textColor="#FFF" />
 
 
     </LinearLayout>
