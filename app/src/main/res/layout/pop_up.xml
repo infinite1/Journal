@@ -3,20 +3,11 @@
     android:layout_width="300dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
-    android:background="@color/colorPrimaryDark"
+    android:background="@mipmap/background3"
     android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
-        android:id="@+id/txtclose"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:background="@drawable/demo_ground"
-        android:gravity="center"
-        android:text="X"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+
 
     <ImageView
         android:layout_width="247dp"
@@ -33,9 +24,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="151dp"
+            android:layout_height="250dp"
             android:layout_weight="1"
-            android:background="@color/color2"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -53,13 +43,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/demo_button"
                 android:text="New to Old"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
+
     </LinearLayout>
+    <ImageView
+        android:id="@+id/txtclose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/close_btn"
+        android:gravity="center"
+        />
 
 
 </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@mipmap/background"
     android:orientation="vertical"
     tools:context=".SaveShare"
     android:layout_gravity="center">
@@ -36,7 +36,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/demo_button"
             android:text="@string/save"
-            android:textColor="@color/black" />
+            android:textColor="#FFF" />
 
         <Button
             android:id="@+id/share_to_other_app"
@@ -46,7 +46,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/demo_button"
             android:text="@string/share"
-            android:textColor="@color/black" />
+            android:textColor="#FFF" />
 
 
     </LinearLayout>

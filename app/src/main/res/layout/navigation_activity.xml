@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
+    android:background="@mipmap/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -12,22 +13,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@mipmap/background"
         android:layout_marginTop="50dp">
 
 
-
-<!--        <include-->
-<!--            layout="@layout/app_bar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
-
-
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/thumbnailRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="56dp"
             android:layout_marginBottom="55dp">
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -35,9 +28,9 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bot_nav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:layout_alignParentBottom="true"
-            android:background="#FFFFFF"
+            android:background="@color/smallwindow_blue"
             app:itemTextColor="#000000"
             app:menu="@menu/bottom_navigation_menu"/>
 

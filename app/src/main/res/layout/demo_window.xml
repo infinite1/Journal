@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color2"
+    android:background="@mipmap/background"
     android:orientation="vertical"
     tools:context=".homeActivity">
 
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background="@drawable/demo_button"
+        android:background="@drawable/mesh_btn"
         android:onClick="save_share"
         android:text="@string/mash"
         android:textColor="#FFF"

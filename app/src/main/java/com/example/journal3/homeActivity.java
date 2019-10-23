@@ -2,6 +2,7 @@ package com.example.journal3;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import android.Manifest;
@@ -27,12 +28,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -69,7 +75,8 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 
 public class homeActivity extends AppCompatActivity implements
-        BottomNavigationView.OnNavigationItemSelectedListener {
+        BottomNavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor>
+        , MediaStoreAdapter.OnClickThumbListener{
     private Toolbar myToolbar;
     private Button mSignIn;
     private BottomNavigationView mBtmView;
@@ -97,6 +104,9 @@ public class homeActivity extends AppCompatActivity implements
     String currentlocation = "carlton";
     private double new_longitude;
     private double new_latitude;
+    private final static int MEDIASTORE_LOADER_ID = 0;
+    private RecyclerView mThumbnailRecyclerView;
+    private MediaStoreAdapter mMediaStoreAdapter;
 
 
     public static final int MAX_SIZE = 100;
@@ -116,20 +126,6 @@ public class homeActivity extends AppCompatActivity implements
 
         //aaaaaaaaaaaaaaaaaaaaaadd
 
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager( new LinearLayoutManager(this));
-
-        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.bilibili.com/video/av19390801?from=search&seid=3678958349904085792\" frameborder=\"0\" allowfullscreen> </iframe>") );
-        youtubeVideos.add( new YouTubeVideos("<iframe src=\"https://www.youtube.com/embed/mfbSqTB74xM\" ></iframe>") );
-        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/tKxHJixw87s\" frameborder=\"0\" allowfullscreen></iframe>") );
-        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/PNqgQbiXXvs\" frameborder=\"0\" allowfullscreen></iframe>") );
-        youtubeVideos.add( new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/fuhf5l8g8j8\" frameborder=\"0\" allowfullscreen></iframe>") );
-
-        VideoAdapter videoAdapter = new VideoAdapter(youtubeVideos);
-
-        recyclerView.setAdapter(videoAdapter);
 
 
         List<String> permissionList = new ArrayList<>();
@@ -232,6 +228,17 @@ public class homeActivity extends AppCompatActivity implements
 
 
 //        videoref =mStorageRef.child("/videos" + "/userIntro.3gp");
+
+
+        getSupportLoaderManager().initLoader(MEDIASTORE_LOADER_ID, null, this);
+        mThumbnailRecyclerView = (RecyclerView) findViewById(R.id.thumbnailRecyclerView);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,
+                StaggeredGridLayoutManager.VERTICAL);
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+//        mThumbnailRecyclerView.setLayoutManager(gridLayoutManager);
+        mThumbnailRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        mMediaStoreAdapter = new MediaStoreAdapter(this);
+        mThumbnailRecyclerView.setAdapter((mMediaStoreAdapter));
 
     }
 
@@ -680,5 +687,49 @@ public class homeActivity extends AppCompatActivity implements
         return (city+","+subadmin+","+admin);
     }
 
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        String[] projection = {
+                MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.DATE_ADDED,
+                MediaStore.Files.FileColumns.DATA,
+                MediaStore.Files.FileColumns.MEDIA_TYPE
+        };
+        String selection = MediaStore.Files.FileColumns.MEDIA_TYPE + "="
+                + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
+                + " OR "
+                + MediaStore.Files.FileColumns.MEDIA_TYPE + "="
+                + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
+        return new CursorLoader(
+                this,
+                MediaStore.Files.getContentUri("external"),
+                projection,
+                selection,
+                null,
+                MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+        );
 
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        mMediaStoreAdapter.changeCursor(data);
+
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        mMediaStoreAdapter.changeCursor(null);
+    }
+
+    @Override
+    public void onClickImage(Uri imageUri) {
+        Toast.makeText(homeActivity.this, "ImageUri = " + imageUri.toString()
+                 , Toast.LENGTH_SHORT).show();
+
+    }
 }
+
+

@@ -3,20 +3,10 @@
     android:layout_width="300dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
-    android:background="@color/colorPrimaryDark"
+    android:background="@mipmap/background3"
     android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
-        android:id="@+id/txtclose"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:background="@drawable/demo_ground"
-        android:gravity="center"
-        android:text="X"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="180dp"
@@ -31,7 +21,6 @@
         android:layout_height="100dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:background="@color/smallwindow_blue"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -84,19 +73,14 @@
 
     </LinearLayout>
 
-        <Button
-            android:id="@+id/ok"
-            android:layout_width="74dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="5dp"
-
-            android:layout_gravity="center_horizontal"
-            android:background="@color/color3"
-            android:text="OK"
-            android:textColor="#FFF"
-            android:textSize="20sp">
-
-        </Button>
+    <ImageView
+        android:id="@+id/txtclose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/close_btn"
+        android:gravity="center"
+        />
 
 
 </LinearLayout>

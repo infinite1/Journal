@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -138,9 +139,9 @@ public class VideoActivity extends AppCompatActivity {
 
 
     public void ShowPopup_order(View v) {
-        TextView txtclose;
+        ImageView txtclose;
         demo_dialog.setContentView(R.layout.pop_up);
-        txtclose = (TextView) demo_dialog.findViewById(R.id.txtclose);
+        txtclose = (ImageView) demo_dialog.findViewById(R.id.txtclose);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,9 +152,9 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     public void ShowPopup_music(View v) {
-        TextView txtclose;
+        ImageView txtclose;
         demo_dialog.setContentView(R.layout.pop_up_music);
-        txtclose = (TextView) demo_dialog.findViewById(R.id.txtclose);
+        txtclose = (ImageView) demo_dialog.findViewById(R.id.txtclose);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,23 +165,16 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     public void ShowPopup_calendar(View v) {
-        TextView txtclose;
+        ImageView txtclose;
         demo_dialog.setContentView(R.layout.pop_up_calendar);
-        txtclose = (TextView) demo_dialog.findViewById(R.id.txtclose);
+        txtclose = (ImageView) demo_dialog.findViewById(R.id.txtclose);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 demo_dialog.dismiss();
             }
         });
-        TextView txtclose1;
-        txtclose1 = (TextView) demo_dialog.findViewById(R.id.ok);
-        txtclose1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                demo_dialog.dismiss();
-            }
-        });
+        
         demo_dialog.show();
 
         mDisplayDate1 = (TextView) demo_dialog.findViewById(R.id.start_date);
@@ -241,9 +235,9 @@ public class VideoActivity extends AppCompatActivity {
 
     public void save_share(View v)
     {
-        TextView txtclose;
+        ImageView txtclose;
         demo_dialog.setContentView(R.layout.pop_up_calendar);
-        txtclose=(TextView)demo_dialog.findViewById(R.id.txtclose);
+        txtclose=(ImageView)demo_dialog.findViewById(R.id.txtclose);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -254,9 +248,9 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     public void upload_video(View v) {
-        TextView txtclose;
+        ImageView txtclose;
         demo_dialog.setContentView(R.layout.pop_upload_video);
-        txtclose = (TextView) demo_dialog.findViewById(R.id.txtclose);
+        txtclose = (ImageView) demo_dialog.findViewById(R.id.txtclose);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

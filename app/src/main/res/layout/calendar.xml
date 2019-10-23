@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@mipmap/background1"
     android:orientation="vertical"
     tools:context=".CalendarActivity">
 
@@ -15,8 +15,8 @@
         android:id="@+id/myDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="Mark Your Dates"
+        android:background="@drawable/demo_button"
+        android:text="  Mark Your Dates  "
         android:textAlignment="center"
         android:textColor="#FFF"
         android:textSize="23sp"

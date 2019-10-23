@@ -7,16 +7,14 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
+    <ImageView
         android:id="@+id/txtclose"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="end"
-        android:background="@drawable/demo_ground"
+        android:src="@mipmap/close_btn"
         android:gravity="center"
-        android:text="X"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        />
 
 
     <LinearLayout
