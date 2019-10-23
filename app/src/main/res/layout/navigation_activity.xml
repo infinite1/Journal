@@ -30,9 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
             android:background="@color/smallwindow_blue"
             app:itemTextColor="#000000"
-            app:menu="@menu/bottom_navigation_menu"/>
+            app:menu="@menu/bottom_navigation_menu" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
