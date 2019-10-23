@@ -53,16 +53,13 @@ public class SaveShare extends AppCompatActivity {
             Log.i("info", "portrait");
         }
 
-        Uri videoUri = Uri.parse(getIntent().getExtras().getString("videoUri"));
-        Uri videoUri2 = Uri.parse(getIntent().getExtras().getString("videoUri2"));
-        String content1 = getIntent().getExtras().getString("videoUri");
-        String content2 = getIntent().getExtras().getString("videoUri2");
+        File directory= new File("/storage/emulated/0/DCIM/three_second/");
+        for (File file : directory.listFiles())
+        {
+            videosToMerge.add(file.getAbsolutePath());
+        }
 
-        videosToMerge.add(content1);
-        videosToMerge.add(content2);
-
-        Log.v("Test",content1);
-        Log.v("Test",content2);
+        Log.v("Test",videosToMerge.toString());
 
 
         String DCIMPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString();
