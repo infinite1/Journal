@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 public class VideoPlayActivity extends AppCompatActivity implements
-        SurfaceHolder.Callback {
+        SurfaceHolder.Callback, MediaPlayer.OnCompletionListener {
 
     private MediaPlayer mMediaPlayer;
     private Uri mVideoUri;
@@ -24,7 +24,7 @@ public class VideoPlayActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_play);
         mPlayPauseButton=(ImageButton)findViewById(R.id.videoPlayPauseButton);
-        mSurfaceView=(SurfaceView)findViewById(R.id.videoSufaceView);
+        mSurfaceView=(SurfaceView)findViewById(R.id.surfaceView);
         Intent Callingintent=this.getIntent();
         if(Callingintent != null)
         {
@@ -82,6 +82,7 @@ public class VideoPlayActivity extends AppCompatActivity implements
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mMediaPlayer=MediaPlayer.create(this, mVideoUri, holder);
+        mMediaPlayer.setOnCompletionListener(this);
         mediaPlay();
     }
 
@@ -93,5 +94,10 @@ public class VideoPlayActivity extends AppCompatActivity implements
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        mPlayPauseButton.setImageResource(R.mipmap.play_button);
     }
 }
