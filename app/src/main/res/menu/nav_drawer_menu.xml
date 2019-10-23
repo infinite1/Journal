@@ -8,17 +8,33 @@
             android:title="Filter"
             android:icon="@drawable/ic_filter_list_black_24dp"/>
         <item
+            android:title="Favorite"
+            android:icon="@drawable/ic_favorite_black_24dp"/>
+        <item
+            android:title="Weather"
+            android:icon="@drawable/ic_cloud_black_24dp"/>
+        <item
             android:title="Settings"
             android:icon="@drawable/ic_settings_black_24dp"/>
-        <item
-            android:title="Share"
-            android:icon="@drawable/ic_share_black_24dp"/>
-        <item
-            android:title="About Us"
-            android:icon="@drawable/ic_people_black_24dp"/>
-        <item
-            android:id="@+id/signOut"
-            android:title="@string/sign_out"
-            android:enabled="true" />
+
     </group>
+
+    <item android:title="Communication">
+        <menu>
+            <item
+                android:title="Share"
+                android:icon="@drawable/ic_share_black_24dp"/>
+            <item
+                android:title="About Us"
+                android:icon="@drawable/ic_people_black_24dp"/>
+            <item
+                android:title="Help"
+                android:icon="@drawable/ic_offline_pin_black_24dp"/>
+            <item
+                android:id="@+id/signOut"
+                android:icon="@drawable/ic_call_received_black_24dp"
+                android:title="@string/sign_out"
+                android:enabled="true" />
+        </menu>
+    </item>
 </menu>
