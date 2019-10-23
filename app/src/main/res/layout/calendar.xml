@@ -13,6 +13,7 @@
 
     <TextView
         android:id="@+id/myDate"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/demo_button"
@@ -27,7 +28,7 @@
     <LinearLayout
         android:layout_marginTop="48dp"
         android:background="@drawable/bg_calendar"
-        android:layout_marginLeft="58dp"
+        android:layout_gravity="center"
         android:layout_width="300dp"
         android:layout_height="wrap_content">
 

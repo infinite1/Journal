@@ -2,10 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/primary">
         <item
+            android:title="Nearby People"
+            android:icon="@drawable/ic_map_black_24dp"/>
+        <item
+            android:title="Filter"
+            android:icon="@drawable/ic_filter_list_black_24dp"/>
+        <item
+            android:title="Settings"
+            android:icon="@drawable/ic_settings_black_24dp"/>
+        <item
+            android:title="Share"
+            android:icon="@drawable/ic_share_black_24dp"/>
+        <item
+            android:title="About Us"
+            android:icon="@drawable/ic_people_black_24dp"/>
+        <item
             android:id="@+id/signOut"
             android:title="@string/sign_out"
             android:enabled="true" />
-        <item
-            android:title="item2" />
     </group>
 </menu>
