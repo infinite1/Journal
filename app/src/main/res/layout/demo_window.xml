@@ -68,16 +68,6 @@
             android:text="@string/order"
             android:textColor="#FFF" />
 
-        <Button
-            android:layout_width="184dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/demo_button"
-            android:onClick="upload_video"
-            android:text="@string/upload_vedio"
-            android:textColor="#FFF" />
 
 
     </LinearLayout>
