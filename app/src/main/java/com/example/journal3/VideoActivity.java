@@ -61,40 +61,6 @@ public class VideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<String> permissionList = new ArrayList<>();
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.CAMERA);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.RECORD_AUDIO);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.INTERNET);
-        }
-
-        if (!permissionList.isEmpty()) {
-            ActivityCompat.requestPermissions(this,
-                    permissionList.toArray(new String[permissionList.size()]), PERMISSION_CODE);
-        } else {
-            Toast.makeText(this, "ALL Permissions granted", Toast.LENGTH_LONG).show();
-        }
-
 
         if (this.getResources().getConfiguration().orientation ==Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.demo_window_horizontal);
@@ -124,10 +90,6 @@ public class VideoActivity extends AppCompatActivity {
                         mash.doneLoadingAnimation(Color.parseColor("#333639"), BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
 
                         Intent intent = new Intent(VideoActivity.this, SaveShare.class);
-                        Log.v("TEST:",videoUriPath);
-                        Log.v("TEST:",videoUri2Path);
-                        intent.putExtra("videoUri",videoUriPath);
-                        intent.putExtra("videoUri2",videoUri2Path);
 
                         startActivity(intent);
                     }
@@ -247,40 +209,6 @@ public class VideoActivity extends AppCompatActivity {
         demo_dialog.show();
     }
 
-    public void upload_video(View v) {
-        ImageView txtclose;
-        demo_dialog.setContentView(R.layout.pop_upload_video);
-        txtclose = (ImageView) demo_dialog.findViewById(R.id.txtclose);
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                demo_dialog.dismiss();
-            }
-        });
-        demo_dialog.show();
-    }
-
-    public void video1(View v) {
-        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-
-        if(intent.resolveActivity(getPackageManager()) != null )
-        {
-            startActivityForResult(intent,REQUEST_TAKE_GALLERY_VIDEO1);
-        }
-    }
-
-    public void video2(View v) {
-        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-
-        if(intent.resolveActivity(getPackageManager()) != null )
-        {
-            startActivityForResult(intent,REQUEST_TAKE_GALLERY_VIDEO2);
-        }
-    }
-
-    public void select_last_month(View v) {
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

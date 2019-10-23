@@ -726,9 +726,14 @@ public class homeActivity extends AppCompatActivity implements
 
     @Override
     public void onClickImage(Uri imageUri) {
-        Toast.makeText(homeActivity.this, "ImageUri = " + imageUri.toString()
-                 , Toast.LENGTH_SHORT).show();
+        Toast.makeText(homeActivity.this, "ImageUri = " + imageUri.toString(),Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onClickVideo(Uri videoUri) {
+        Intent videoPlayIntent= new Intent(this, VideoPlayActivity.class);
+        videoPlayIntent.setData(videoUri);
+        startActivity(videoPlayIntent);
     }
 }
 
