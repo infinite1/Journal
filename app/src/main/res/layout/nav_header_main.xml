@@ -17,7 +17,7 @@
         android:layout_marginBottom="18dp"
         android:contentDescription="@string/profile_image"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@mipmap/LegoProfile" />
+        app:srcCompat="@mipmap/legoprofile" />
 
     <Button
         android:id="@+id/nav_sign_in_btn"
