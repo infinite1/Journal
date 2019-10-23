@@ -27,10 +27,10 @@ public class MediaStoreAdapter extends RecyclerView.Adapter<MediaStoreAdapter.Vi
 
     }
 
-    public MediaStoreAdapter(Activity mAcitivty)
+    public MediaStoreAdapter(Activity activity)
     {
-        this.mAcitivty = mAcitivty;
-        this.mOnClickThumbListener=(OnClickThumbListener)mAcitivty;
+        this.mAcitivty = activity;
+        this.mOnClickThumbListener=(OnClickThumbListener)activity;
     }
 
     @Override
