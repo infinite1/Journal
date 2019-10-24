@@ -114,9 +114,9 @@ public class homeActivity extends AppCompatActivity implements
 
     private List<String> recordList = new ArrayList<String>(MAX_SIZE);
 
-    //aaaaaaaaaaaaaaaaaaaadd
-    RecyclerView recyclerView;
-    Vector<YouTubeVideos> youtubeVideos = new Vector<YouTubeVideos>();
+//    //aaaaaaaaaaaaaaaaaaaadd
+//    RecyclerView recyclerView;
+//    Vector<YouTubeVideos> youtubeVideos = new Vector<YouTubeVideos>();
 
 
     @Override
