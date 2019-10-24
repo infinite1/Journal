@@ -40,9 +40,9 @@ import java.util.TimerTask;
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class VideoActivity extends AppCompatActivity {
-    private int REQUEST_TAKE_GALLERY_VIDEO1=100;
-    private int REQUEST_TAKE_GALLERY_VIDEO2=101;
-    private int PERMISSION_CODE=99;
+    private int REQUEST_TAKE_GALLERY_VIDEO1 = 100;
+    private int REQUEST_TAKE_GALLERY_VIDEO2 = 101;
+    private int PERMISSION_CODE = 99;
     Dialog demo_dialog;
     CircularProgressButton mash;
     private Uri videoUri;
@@ -63,17 +63,16 @@ public class VideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        if (this.getResources().getConfiguration().orientation ==Configuration.ORIENTATION_LANDSCAPE) {
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.demo_window_horizontal);
             Log.i("info", "landscape");
-        }
-        else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             setContentView(R.layout.demo_window);
             Log.i("info", "portrait");
 
         }
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             videoUriPath = savedInstanceState.getString("videoUriPath");
             videoUri2Path = savedInstanceState.getString("videoUri2Path");
         }
@@ -81,13 +80,13 @@ public class VideoActivity extends AppCompatActivity {
         demo_dialog = new Dialog(this);
 
         mash = (CircularProgressButton) findViewById(R.id.save_share);
-        mash.setOnClickListener(new View.OnClickListener(){
+        mash.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mash.startAnimation();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(VideoActivity.this," Mash finished",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VideoActivity.this, " Mash finished", Toast.LENGTH_SHORT).show();
                         mash.doneLoadingAnimation(Color.parseColor("#333639"), BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
 
                         Intent intent = new Intent(VideoActivity.this, SaveShare.class);
@@ -96,7 +95,7 @@ public class VideoActivity extends AppCompatActivity {
 
                         startActivity(intent);
                     }
-                },3000);
+                }, 3000);
 
             }
         });
@@ -112,11 +111,10 @@ public class VideoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 demo_dialog.dismiss();
                 if (order) {
-                    TextView setting1 =(TextView) findViewById(R.id.Setting2);
+                    TextView setting1 = (TextView) findViewById(R.id.Setting2);
                     setting1.setText("MESH ORDER: " + "OLD TO NEW");
-                }
-                else {
-                    TextView setting1 =(TextView) findViewById(R.id.Setting2);
+                } else {
+                    TextView setting1 = (TextView) findViewById(R.id.Setting2);
                     setting1.setText("MESH ORDER: " + "NEW TO OLD");
                 }
 
@@ -166,12 +164,12 @@ public class VideoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.v("test", start_date + end_date);
                 demo_dialog.dismiss();
-                TextView setting1 =(TextView) findViewById(R.id.Setting1);
-                setting1.setText("DATE RANGE: " + start_date+ " " + end_date);
+                TextView setting1 = (TextView) findViewById(R.id.Setting1);
+                setting1.setText("DATE RANGE:" + start_date + " " + end_date);
 
             }
         });
-        
+
         demo_dialog.show();
 
         mDisplayDate1 = (TextView) demo_dialog.findViewById(R.id.start_date);
@@ -209,7 +207,7 @@ public class VideoActivity extends AppCompatActivity {
         mDateSetLinstenner = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month +1;
+                month = month + 1;
                 String date_start = month + "/" + day + "/" + year;
                 start_date = date_start;
                 String ResourceIdAsString = view.getResources().getResourceName(view.getId());
@@ -222,7 +220,7 @@ public class VideoActivity extends AppCompatActivity {
         mDateSetLinstenner2 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month +1;
+                month = month + 1;
                 String date_end = month + "/" + day + "/" + year;
                 end_date = date_end;
                 String ResourceIdAsString = view.getResources().getResourceName(view.getId());
@@ -232,11 +230,10 @@ public class VideoActivity extends AppCompatActivity {
         };
     }
 
-    public void save_share(View v)
-    {
+    public void save_share(View v) {
         ImageView txtclose;
         demo_dialog.setContentView(R.layout.pop_up_calendar);
-        txtclose=(ImageView)demo_dialog.findViewById(R.id.txtclose);
+        txtclose = (ImageView) demo_dialog.findViewById(R.id.txtclose);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -265,8 +262,8 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     public String convertMediaUriToPath(Uri uri) {
-        String [] proj={MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(uri, proj,  null, null, null);
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, proj, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         String path = cursor.getString(column_index);

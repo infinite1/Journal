@@ -37,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
         mEmailField = findViewById(R.id.etEmail);
         mPasswordField = findViewById(R.id.etPassword);
         mSignUp = findViewById(R.id.btnSignUp);
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -66,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         showProgressDialog();
 
-        // [START create_user_with_email]
+        // Create user with email and password
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
